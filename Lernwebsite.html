@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lernwebsite (ohne KI)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --bg:#F4F7FB; --surface:#FFFFFF; --ink:#14213D; --muted:#55607A; --line:#D9E0EC; --nav:#F4F7FB;
+  --blue:#2F5DA8; --blue-t:#E3ECFA;
+  --green:#1F8A70; --green-t:#DDF3EC;
+  --pink:#B83B76; --pink-t:#F9E1EC;
+  --amber:#9A6200; --amber-t:#FBEFD5;
+  --on-accent:#FFFFFF;
+  --radius:14px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --bg:#0F1626; --surface:#182238; --ink:#E8EDF8; --muted:#9AA6C0; --line:#2A3654; --nav:#0F1626;
+    --blue:#7FA6EA; --blue-t:#1D2E52;
+    --green:#57C9A8; --green-t:#173B35;
+    --pink:#EE7FB0; --pink-t:#46223A;
+    --amber:#E8B04C; --amber-t:#43351A;
+    --on-accent:#0F1626;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#0F1626; --surface:#182238; --ink:#E8EDF8; --muted:#9AA6C0; --line:#2A3654; --nav:#0F1626;
+  --blue:#7FA6EA; --blue-t:#1D2E52;
+  --green:#57C9A8; --green-t:#173B35;
+  --pink:#EE7FB0; --pink-t:#46223A;
+  --amber:#E8B04C; --amber-t:#43351A;
+  --on-accent:#0F1626;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--nav);z-index:30}
+h1,h2,h3{font-family:"Space Grotesk","Inter",system-ui,sans-serif;line-height:1.12;margin:0}
+p{margin:0 0 .6em}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+
+/* Kopf */
+header.hero{padding:44px 0 26px}
+header.hero h1{font-size:clamp(2.1rem,6.5vw,3.6rem);font-weight:800;letter-spacing:-.02em;max-width:14ch}
+header.hero p.sub{color:var(--muted);font-size:1.1rem;max-width:46ch;margin-top:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{padding:5px 12px;border-radius:99px;font-weight:600;font-size:.9rem}
+.chip.b{background:var(--blue-t);color:var(--blue)}
+.chip.g{background:var(--green-t);color:var(--green)}
+.chip.p{background:var(--pink-t);color:var(--pink)}
+
+/* Navigation */
+nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--nav);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:10px;padding-bottom:10px;scrollbar-width:none}
+nav.top a{flex:0 0 auto;padding:7px 14px;border-radius:99px;text-decoration:none;color:var(--ink);font-weight:600;font-size:.95rem;border:1px solid var(--line);background:var(--surface)}
+nav.top a:hover,nav.top a:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+
+/* Abschnitte */
+section.topic{padding:46px 0 10px;--a:var(--blue);--t:var(--blue-t)}
+section.topic.fam{--a:var(--green);--t:var(--green-t)}
+section.topic.bez{--a:var(--pink);--t:var(--pink-t)}
+section.topic.test{--a:var(--amber);--t:var(--amber-t)}
+.topic-head{display:flex;align-items:baseline;gap:14px;border-bottom:3px solid var(--a);padding-bottom:10px;margin-bottom:26px}
+.topic-head .code{font-family:"Space Grotesk",sans-serif;font-weight:800;font-size:1.1rem;color:var(--on-accent);background:var(--a);padding:4px 11px;border-radius:8px}
+.topic-head h2{font-size:clamp(1.7rem,4.5vw,2.4rem);font-weight:800;letter-spacing:-.01em}
+h3{font-size:1.3rem;font-weight:700;margin:34px 0 12px;color:var(--ink)}
+.lead{font-size:1.12rem}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
+.def{background:var(--t);border-left:5px solid var(--a);border-radius:var(--radius);padding:16px 20px}
+.def b{color:var(--a)}
+.tip{background:var(--amber-t);border-radius:var(--radius);padding:12px 16px;margin-top:14px;font-size:.98rem}
+.tip b{color:var(--amber)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:700px){.grid2,.grid3{grid-template-columns:1fr}}
+ul.tight{margin:.3em 0 0;padding-left:1.15em}
+ul.tight li{margin:.2em 0}
+.small{font-size:.92rem;color:var(--muted)}
+.tag{display:inline-block;font-weight:700;font-size:.85rem;padding:2px 9px;border-radius:99px;background:var(--t);color:var(--a);margin-bottom:6px}
+
+/* Gibbs */
+.gibbs{width:100%;max-width:640px;margin:8px auto 0;display:block}
+.gibbs .ring{fill:none;stroke:var(--line);stroke-width:2;stroke-dasharray:6 7}
+.gibbs .node rect{fill:var(--surface);stroke:var(--blue);stroke-width:2}
+.gibbs .node .nm{font-family:"Space Grotesk","Inter",sans-serif;font-weight:700;font-size:15px;fill:var(--ink)}
+.gibbs .node .q{font-size:11.5px;fill:var(--muted);font-family:"Inter",sans-serif}
+.gibbs .node .num{fill:var(--blue)}
+.gibbs .node .numt{font-family:"Space Grotesk",sans-serif;font-weight:800;font-size:13px;fill:var(--on-accent);text-anchor:middle}
+.gibbs .mid{font-family:"Space Grotesk",sans-serif;font-weight:800;font-size:26px;fill:var(--blue);text-anchor:middle}
+.gibbs .mid2{font-size:12.5px;fill:var(--muted);text-anchor:middle;font-family:"Inter",sans-serif}
+
+/* Johari */
+.johari-wrap{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:stretch}
+.johari-wrap .colhead{grid-column:2;display:grid;grid-template-columns:1fr 1fr;gap:6px;text-align:center;font-weight:700;font-size:.92rem;color:var(--muted)}
+.johari-wrap .rowhead{display:grid;grid-template-rows:1fr 1fr;gap:6px}
+.johari-wrap .rowhead div{writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;font-weight:700;font-size:.92rem;color:var(--muted);display:flex;align-items:center;justify-content:center}
+.panes{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pane{border-radius:12px;padding:14px 14px 16px;min-height:150px;background:var(--surface);border:2px solid var(--line)}
+.pane h4{font-family:"Space Grotesk",sans-serif;font-size:1.12rem;margin:0 0 4px}
+.pane p{font-size:.93rem;margin:0 0 6px}
+.pane .ex{color:var(--muted);font-size:.88rem}
+.pane.oeff{background:var(--green-t);border-color:var(--green)}
+.pane.oeff h4{color:var(--green)}
+.pane.blind{background:var(--pink-t);border-color:var(--pink)}
+.pane.blind h4{color:var(--pink)}
+.pane.priv{background:var(--blue-t);border-color:var(--blue)}
+.pane.priv h4{color:var(--blue)}
+.pane.unb{background:var(--amber-t);border-color:var(--amber)}
+.pane.unb h4{color:var(--amber)}
+@media (max-width:560px){.pane{min-height:0}.panes{grid-template-columns:1fr}.johari-wrap{grid-template-columns:1fr}.johari-wrap .colhead,.johari-wrap .rowhead{display:none}}
+
+/* Säulen */
+.temple{margin-top:6px}
+.roof{background:var(--green);color:var(--on-accent);font-family:"Space Grotesk",sans-serif;font-weight:800;font-size:1.25rem;text-align:center;padding:30px 10px 12px;clip-path:polygon(50% 0,100% 100%,0 100%);margin:0 -2px}
+.pillars{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:10px 6px 0;border-bottom:8px solid var(--green)}
+.pillar{background:var(--green-t);border:2px solid var(--green);border-bottom:0;border-radius:10px 10px 0 0;padding:14px 8px 18px;text-align:center;min-height:210px}
+.pillar b{display:block;font-family:"Space Grotesk",sans-serif;font-size:1.02rem;line-height:1.15;color:var(--green);margin-bottom:8px;overflow-wrap:anywhere}
+.pillar span{font-size:.88rem;color:var(--ink)}
+.pillar .mk{display:block;margin-top:10px;font-weight:700;font-size:.85rem;color:var(--green)}
+@media (max-width:640px){
+  .roof{display:none}
+  .pillars{grid-template-columns:1fr;border-bottom:0;padding:0}
+  .pillar{min-height:0;border-bottom:2px solid var(--green);border-radius:10px;text-align:left;padding:12px 14px}
+  .pillar b{overflow-wrap:normal}
+}
+
+/* Familienformen */
+.fam-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:760px){.fam-cards{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.fam-cards{grid-template-columns:1fr}}
+.fcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px}
+.fcard h4{font-family:"Space Grotesk",sans-serif;font-size:1.08rem;margin:10px 0 4px}
+.fcard p{font-size:.92rem;margin:0;color:var(--muted)}
+.figs{display:flex;align-items:flex-end;gap:7px;height:44px}
+.figs i{display:block;border-radius:50%}
+.figs .A{width:30px;height:30px;background:var(--green)}
+.figs .B{width:30px;height:30px;background:var(--pink)}
+.figs .C{width:30px;height:30px;background:var(--green);box-shadow:0 0 0 3px var(--surface),0 0 0 5px var(--green)}
+.figs .k{width:19px;height:19px;background:var(--blue)}
+.figs .j{width:19px;height:19px;background:var(--amber)}
+.figs .ad{width:19px;height:19px;background:transparent;border:3px dashed var(--blue)}
+
+/* Zeitstrahl */
+.timeline{list-style:none;margin:6px 0 0;padding:0;display:grid;grid-template-columns:repeat(6,1fr);gap:8px;position:relative}
+.timeline li{position:relative;padding-top:34px;text-align:center}
+.timeline li::before{content:"";position:absolute;top:13px;left:-4px;right:-4px;height:4px;background:var(--green)}
+.timeline li:first-child::before{left:50%}
+.timeline li:last-child::before{right:50%}
+.timeline li::after{content:attr(data-n);position:absolute;top:0;left:50%;transform:translateX(-50%);width:30px;height:30px;border-radius:50%;background:var(--green);color:var(--on-accent);font-weight:800;font-family:"Space Grotesk",sans-serif;display:grid;place-items:center;font-size:.95rem}
+.timeline b{display:block;font-family:"Space Grotesk",sans-serif;font-size:.98rem;line-height:1.15}
+.timeline span{display:block;font-size:.85rem;color:var(--muted);margin-top:4px}
+@media (max-width:700px){
+  .timeline{grid-template-columns:1fr;gap:0}
+  .timeline li{text-align:left;padding:2px 0 18px 46px}
+  .timeline li::before{top:0;bottom:0;left:14px;right:auto;width:4px;height:auto}
+  .timeline li:first-child::before{left:14px;top:15px}
+  .timeline li:last-child::before{right:auto;bottom:calc(100% - 15px)}
+  .timeline li::after{left:0;transform:none;top:0}
+}
+
+/* Beziehung: Vergleich */
+.cmp{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--surface)}
+.cmp .row{display:grid;grid-template-columns:150px 1fr 1fr;border-top:1px solid var(--line)}
+.cmp .row:first-child{border-top:0}
+.cmp .row>div{padding:11px 14px}
+.cmp .hd{background:var(--pink);color:var(--on-accent);font-family:"Space Grotesk",sans-serif;font-weight:800}
+.cmp .lab{font-weight:700;color:var(--pink);background:var(--pink-t)}
+.cmp .row>div+div{border-left:1px solid var(--line)}
+@media (max-width:620px){
+  .cmp .row{grid-template-columns:1fr 1fr}
+  .cmp .row .lab{grid-column:1 / -1}
+  .cmp .row.head .lab{display:none}
+}
+
+/* Feedback */
+.fb h4{font-family:"Space Grotesk",sans-serif;font-size:1.1rem;margin:0 0 6px;color:var(--blue)}
+.bad{background:var(--pink-t);border-radius:10px;padding:10px 14px;margin-bottom:8px}
+.good{background:var(--green-t);border-radius:10px;padding:10px 14px}
+
+/* Selbsttest */
+details.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:10px}
+details.card summary{cursor:pointer;padding:14px 16px;font-weight:600;list-style:none;display:flex;gap:12px;align-items:flex-start}
+details.card summary::-webkit-details-marker{display:none}
+details.card summary::before{content:"?";flex:0 0 26px;height:26px;border-radius:50%;background:var(--amber);color:var(--on-accent);font-weight:800;display:grid;place-items:center;font-size:.95rem;margin-top:1px}
+details.card[open] summary::before{content:"✓";background:var(--green);color:var(--on-accent)}
+details.card summary:focus-visible{outline:2px solid var(--amber);outline-offset:2px;border-radius:12px}
+details.card .ans{padding:0 16px 16px 54px;font-size:.97rem}
+.kbtn{display:inline-block;margin:4px 0 16px;padding:8px 14px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-weight:600;cursor:pointer}
+.kbtn:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+
+/* Eigene Beispiele */
+.own label{display:block;font-weight:700;margin:16px 0 6px}
+.own .hint{font-weight:400;color:var(--muted);font-size:.92rem;display:block}
+.own textarea{width:100%;min-height:110px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;resize:vertical}
+.own textarea:focus-visible{outline:2px solid var(--amber);outline-offset:1px}
+
+
+/* Aufgaben mit KI-Auswertung */
+.task{margin-top:38px;background:var(--surface);border:2px solid var(--a);border-radius:var(--radius);padding:20px}
+.task h3{margin:0 0 4px;font-size:1.35rem;color:var(--a)}
+.task .meta{font-size:.9rem;color:var(--muted);margin-bottom:12px}
+.task .q{font-weight:600;font-size:1.06rem;margin-bottom:12px}
+.task textarea{width:100%;min-height:130px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;resize:vertical}
+.task textarea:focus-visible{outline:2px solid var(--a);outline-offset:1px}
+.task .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.task button{font:inherit;font-weight:700;padding:9px 16px;border-radius:99px;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.task button.go{background:var(--a);color:var(--on-accent);border-color:var(--a)}
+.task button:disabled{opacity:.5;cursor:not-allowed}
+.task button:focus-visible{outline:2px solid var(--a);outline-offset:2px}
+.task .out{margin-top:16px;padding:14px 16px;border-radius:12px;background:var(--t);display:none}
+.task .out.on{display:block}
+.task .out div{margin:0 0 8px}
+.task .out div:last-child{margin-bottom:0}
+.task .out strong{color:var(--a)}
+.task .note{margin-top:10px;font-size:.9rem;color:var(--muted)}
+footer{padding:40px 0 60px;color:var(--muted);font-size:.92rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+.rates{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.rate{background:var(--surface);border:2px solid var(--a);border-radius:var(--radius);padding:16px;text-align:center}
+.rate .pct{font-family:"Space Grotesk","Inter",sans-serif;font-weight:800;font-size:2.5rem;color:var(--a);line-height:1}
+.rate h4{font-family:"Space Grotesk","Inter",sans-serif;margin:8px 0 4px;font-size:1.1rem}
+.rate p{font-size:.92rem;color:var(--muted);margin:0}
+@media (max-width:700px){.rates{grid-template-columns:1fr}}
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:stretch}
+.flow .arrow{display:grid;place-items:center;font-size:1.7rem;font-weight:800;color:var(--a)}
+.flow .node{background:var(--surface);border:2px solid var(--a);border-radius:var(--radius);padding:14px 16px}
+.flow .node.mid{background:var(--a);color:var(--on-accent);text-align:center;display:grid;place-items:center;font-family:"Space Grotesk","Inter",sans-serif;font-weight:800;font-size:1.3rem}
+.flow .node h4{margin:0 0 6px;font-family:"Space Grotesk","Inter",sans-serif;color:var(--a)}
+.flow .node ul{margin:0;padding-left:1.1em;font-size:.95rem}
+@media (max-width:760px){.flow{grid-template-columns:1fr}.flow .arrow span{display:inline-block;transform:rotate(90deg)}}
+.dir{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:700px){.dir{grid-template-columns:1fr}}
+.dir .side{border-radius:var(--radius);padding:18px 20px;border:2px solid var(--a);background:var(--t)}
+.dir .side.ind{border-color:var(--pink);background:var(--pink-t)}
+.dir .side h4{font-family:"Space Grotesk","Inter",sans-serif;font-size:1.25rem;margin:0 0 4px;color:var(--a)}
+.dir .side.ind h4{color:var(--pink)}
+.dir .side ul{margin:8px 0 0;padding-left:1.1em}
+.chips2{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 0}
+.chips2 span{background:var(--t);color:var(--a);font-weight:600;padding:6px 13px;border-radius:99px;font-size:.95rem}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:700px){.three{grid-template-columns:1fr}}
+.three div{background:var(--t);border-radius:12px;padding:12px 16px;text-align:center;font-weight:700;color:var(--a)}
+.chartbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+.chartbox h4{margin:0 0 10px;font-family:"Space Grotesk","Inter",sans-serif;font-size:1.15rem}
+.chart{display:flex;gap:14px;align-items:flex-end;height:190px;border-bottom:3px solid var(--line);padding:0 6px}
+.chart .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;height:100%;font-weight:700;font-size:.95rem}
+.chart .col i{display:block;width:100%;border-radius:8px 8px 0 0;background:var(--a)}
+.chartlab{display:flex;gap:14px;padding:6px 6px 0}
+.chartlab div{flex:1;text-align:center;font-size:.86rem;color:var(--muted)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media (max-width:760px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:440px){.steps{grid-template-columns:1fr}}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 14px 16px;text-align:center}
+.step .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--a);color:var(--on-accent);font-weight:800;font-size:.9rem;margin-bottom:6px}
+.step .amt{font-family:"Space Grotesk","Inter",sans-serif;font-weight:800;font-size:1.6rem;line-height:1.1}
+.step .amt.minus{color:var(--pink)}
+.step .amt.plus{color:var(--blue)}
+.step p{margin:6px 0 0;font-size:.9rem;color:var(--muted)}
+.calc{background:var(--t);border-radius:var(--radius);padding:16px 18px;margin-top:16px}
+.calc h4{margin:0 0 10px;font-family:"Space Grotesk","Inter",sans-serif;font-size:1.1rem;color:var(--a)}
+.calc .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.calc input,.calc select{font:inherit;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.calc input{width:150px}
+.calc input:focus-visible,.calc select:focus-visible{outline:2px solid var(--a);outline-offset:1px}
+.calc .res{margin-top:12px;font-weight:600}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media (max-width:620px){.checks{grid-template-columns:1fr}}
+.chk{display:flex;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;cursor:pointer}
+.chk input{width:20px;height:20px;accent-color:var(--a)}
+.chk:has(input:checked){background:var(--t);border-color:var(--a)}
+.dual{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:700px){.dual{grid-template-columns:1fr}}
+.core{margin:0;padding-left:1.2em}
+.core li{margin:.35em 0}
+
+section.topic.txt{--a:#6A4FB3;--t:#ECE7FA}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) section.topic.txt{--a:#B9A6F2;--t:#2D2450}}
+:root[data-theme="dark"] section.topic.txt{--a:#B9A6F2;--t:#2D2450}
+.types{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:760px){.types{grid-template-columns:1fr}}
+.tcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+.tcard h4{font-family:"Space Grotesk","Inter",sans-serif;font-size:1.25rem;margin:0 0 2px;color:var(--a)}
+.tcard .cap{font-size:.9rem;color:var(--muted);margin:0 0 6px}
+.tcard svg{width:100%;height:auto;display:block;margin:4px 0 8px}
+.tcard p{font-size:.95rem;margin:0 0 4px}
+.svg-bar{fill:var(--a)}
+.svg-axis{stroke:var(--muted);stroke-width:1.5}
+.svg-grid{stroke:var(--line);stroke-width:1}
+.svg-t{fill:var(--ink);font:600 12px "Inter",system-ui,sans-serif}
+.svg-m{fill:var(--muted);font:12px "Inter",system-ui,sans-serif}
+.svg-line{fill:none;stroke:var(--a);stroke-width:3;stroke-linejoin:round}
+.svg-dot{fill:var(--surface);stroke:var(--a);stroke-width:3}
+.pc1{fill:var(--blue)} .pc2{fill:var(--green)} .pc3{fill:var(--pink)} .pc4{fill:var(--amber)}
+.pie-slice{stroke:var(--surface);stroke-width:2}
+.decide{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px}
+@media (max-width:820px){.decide{grid-template-columns:1fr 1fr}}
+@media (max-width:460px){.decide{grid-template-columns:1fr}}
+.dcard{border-radius:var(--radius);padding:14px 16px;background:var(--t);border:2px solid var(--a)}
+.dcard .qq{font-size:.95rem;margin:0 0 8px}
+.dcard .aa{font-family:"Space Grotesk","Inter",sans-serif;font-weight:800;font-size:1.2rem;color:var(--a)}
+.quiz{margin-top:18px}
+.qitem{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px}
+.qitem .qt{font-weight:600;margin-bottom:8px}
+.qitem .opts{display:flex;flex-wrap:wrap;gap:8px}
+.qitem button{font:inherit;font-weight:600;padding:7px 14px;border-radius:99px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.qitem button:focus-visible{outline:2px solid var(--a);outline-offset:2px}
+.qitem button.right{background:var(--green);color:var(--on-accent);border-color:var(--green)}
+.qitem button.wrong{background:var(--pink-t);color:var(--pink);border-color:var(--pink)}
+.qitem .fb{margin-top:8px;font-size:.95rem}
+.wsteps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:820px){.wsteps{grid-template-columns:1fr}}
+.wstep{background:var(--surface);border:2px solid var(--a);border-radius:var(--radius);padding:16px 18px}
+.wstep .n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--a);color:var(--on-accent);font-weight:800;margin-bottom:6px}
+.wstep h4{font-family:"Space Grotesk","Inter",sans-serif;font-size:1.2rem;margin:0 0 4px;color:var(--a)}
+.wstep .what{font-size:.95rem;margin:0 0 8px}
+.wstep ul{margin:0;padding-left:1.1em;font-size:.92rem;color:var(--muted)}
+.extext{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+.extext p{margin:0 0 10px}
+.extext p:last-child{margin:0}
+.lb{display:inline-block;font-weight:800;font-size:.8rem;color:var(--on-accent);background:var(--a);border-radius:6px;padding:1px 8px;margin-right:6px}
+.checks2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media (max-width:620px){.checks2{grid-template-columns:1fr}}
+.checks2 div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.checks2 b{color:var(--a)}
+
+:root{--brand:#0F766E;--brand-strong:#115E59;--brand-text:#0F766E;--side-active:#FFFFFF;--note-bg:#FFF6C7;--note-line:#E6D27A;--note-ink:#2B2615;--bg:#F6F7F9;--nav:#F6F7F9}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--brand-text:#5ED3BA;--side-active:#1E2840;--note-bg:#3A3420;--note-line:#5C5130;--note-ink:#F3EBC8;--bg:#0F1626;--nav:#0F1626}}
+:root[data-theme="dark"]{--brand-text:#5ED3BA;--side-active:#1E2840;--note-bg:#3A3420;--note-line:#5C5130;--note-ink:#F3EBC8;--bg:#0F1626;--nav:#0F1626}
+body{font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif}
+.app{display:flex;flex-wrap:wrap;gap:0 36px;max-width:1320px;margin:0 auto;padding:0 20px}
+.side{flex:1 1 220px;max-width:250px}
+.content{flex:999 1 560px;min-width:0;padding-bottom:40px}
+.content .wrap{max-width:980px;margin:0;padding-left:0;padding-right:0}
+@media (min-width:900px){.side{position:sticky;top:env(safe-area-inset-top,0px);align-self:flex-start;max-height:100vh;overflow:auto;padding:28px 0;box-sizing:border-box}.menu-btn{display:none}}
+@media (max-width:899px){.side{flex-basis:100%;max-width:none;padding:12px 0 0}.side-nav{display:none}.side-nav.open{display:flex}}
+.side-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px}
+.brand{font-family:"Space Grotesk","Inter",sans-serif;font-weight:700;font-size:22px;color:var(--ink);text-decoration:none}
+.menu-btn{font:inherit;font-weight:600;min-height:44px;padding:0 16px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.side-nav{display:flex;flex-direction:column;gap:2px}
+.side-label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:18px 14px 6px}
+.nav-item{display:flex;align-items:center;gap:12px;min-height:44px;padding:0 14px;border-radius:10px;color:var(--ink);text-decoration:none;font:inherit;font-size:16px;background:transparent;border:0;cursor:pointer;text-align:left;width:100%;box-sizing:border-box}
+.nav-item:hover{background:var(--surface)}
+.nav-item.active{background:var(--side-active);font-weight:600;box-shadow:0 1px 2px rgba(16,24,40,.08)}
+.nav-item:focus-visible,.menu-btn:focus-visible,.brand:focus-visible{outline:2px solid var(--brand-text);outline-offset:2px}
+.nav-item .dot{width:10px;height:10px;border-radius:50%;flex:0 0 10px}
+.nav-item .grow{flex:1}
+.nav-item .count{font-size:13px;color:var(--muted)}
+.switch{width:38px;height:22px;border-radius:99px;background:var(--line);position:relative;flex:0 0 38px;transition:background .2s}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s}
+#themeBtn[aria-pressed="true"] .switch{background:var(--brand)}
+#themeBtn[aria-pressed="true"] .switch::after{transform:translateX(16px)}
+.searchbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--bg);padding:18px 0 12px}
+.search-wrap{position:relative;max-width:640px}
+.search-field{display:flex;align-items:center;gap:10px;min-height:50px;padding:0 16px;border-radius:14px;border:1px solid var(--line);background:var(--surface)}
+.search-field:focus-within{outline:2px solid var(--brand-text);outline-offset:1px}
+.search-field svg{flex:0 0 20px;color:var(--muted)}
+.search-field input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:inherit;font-size:16px;outline:none;min-height:46px}
+.results{position:absolute;left:0;right:0;top:calc(100% + 6px);margin:0;padding:6px;list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 32px rgba(16,24,40,.16);max-height:min(420px,60vh);overflow:auto;z-index:45}
+.results[hidden]{display:none}
+.results li{padding:10px 12px;border-radius:10px;cursor:pointer}
+.results li[aria-selected="true"],.results li:hover{background:var(--bg)}
+.results .rl{font-weight:600;display:block}
+.results .rc{font-size:13px;color:var(--muted);display:block;margin-top:2px}
+.results .none{cursor:default;color:var(--muted)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.home h1{font-family:"Space Grotesk","Inter",sans-serif;font-size:clamp(2rem,5vw,2.6rem);margin:18px 0 8px}
+.home .sub{color:var(--muted);font-size:17px;margin:0 0 24px}
+.cont{background:var(--brand);color:#fff;border-radius:16px;padding:22px 26px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:28px}
+.cont[hidden]{display:none}
+.cont .k{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;opacity:.9}
+.cont .t{font-family:"Space Grotesk","Inter",sans-serif;font-size:26px;font-weight:700;margin-top:4px}
+.cont .m{font-size:15px;opacity:.92;margin-top:2px}
+.cont a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 22px;border-radius:99px;background:#fff;color:#0F766E;font-weight:600;text-decoration:none}
+.cont a:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.home h2,.subjview h2{font-family:"Space Grotesk","Inter",sans-serif;font-size:22px;margin:0 0 14px}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.tcard2{display:flex;flex-direction:column;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;color:var(--ink);text-decoration:none}
+.tcard2:hover{border-color:var(--brand-text)}
+.tcard2:focus-visible{outline:2px solid var(--brand-text);outline-offset:2px}
+.tcard2 .f{font-size:13px;font-weight:600}
+.tcard2 .n{font-family:"Space Grotesk","Inter",sans-serif;font-weight:700;font-size:19px}
+.tcard2 .x{font-size:14px;color:var(--muted)}
+.subjview h1{font-family:"Space Grotesk","Inter",sans-serif;font-size:clamp(2rem,5vw,2.6rem);margin:18px 0 8px}
+.empty{background:var(--surface);border:2px dashed var(--line);border-radius:14px;padding:24px;color:var(--muted)}
+.crumbs{padding-top:6px;font-size:.92rem;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}
+.crumbs a{color:var(--brand-text);font-weight:600;text-decoration:none}
+.secnav{display:flex;flex-wrap:wrap;gap:8px;padding:4px 0 6px}
+.secnav button{font:inherit;font-weight:600;font-size:.92rem;min-height:40px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.secnav button:focus-visible{outline:2px solid var(--brand-text);outline-offset:2px}
+.topicview header.hero{padding:16px 0 20px}
+.flash{outline:3px solid var(--brand-text)!important;outline-offset:6px;border-radius:10px;transition:outline-color 1s}
+.note-fab{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:60;display:inline-flex;align-items:center;gap:8px;font:inherit;font-weight:700;min-height:48px;padding:0 20px;border-radius:99px;border:0;background:var(--brand);color:#fff;box-shadow:0 8px 24px rgba(16,24,40,.22);cursor:pointer}
+.note-fab:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.note{position:fixed;z-index:70;width:320px;height:340px;min-width:240px;min-height:220px;max-width:calc(100vw - 16px);max-height:calc(100vh - 16px);display:flex;flex-direction:column;background:var(--note-bg);color:var(--note-ink);border:1px solid var(--note-line);border-radius:6px;box-shadow:0 18px 40px rgba(16,24,40,.25);resize:both;overflow:hidden;transform:rotate(-.6deg)}
+.note[hidden]{display:none}
+.note.dragging{transform:none;box-shadow:0 24px 50px rgba(16,24,40,.32)}
+.note-head{display:flex;align-items:center;gap:8px;padding:8px 8px 6px 12px;cursor:grab;touch-action:none;user-select:none;border-bottom:1px dashed var(--note-line)}
+.note.dragging .note-head{cursor:grabbing}
+.note-head .grip{display:flex;color:var(--note-ink);opacity:.6}
+.note-head .nt{flex:1;font-family:"Space Grotesk","Inter",sans-serif;font-weight:700}
+.note-head button{display:grid;place-items:center;width:36px;height:36px;border-radius:8px;border:0;background:transparent;color:var(--note-ink);cursor:pointer}
+.note-head button:hover{background:rgba(0,0,0,.07)}
+.note-head button:focus-visible{outline:2px solid var(--note-ink)}
+.note-topic{font-size:12.5px;padding:6px 12px 0;opacity:.8}
+.note textarea{flex:1;margin:6px 10px 0;padding:6px 4px;border:0;background:transparent;color:var(--note-ink);font:inherit;font-size:15px;line-height:28px;resize:none;outline:none;background-image:linear-gradient(transparent 27px,var(--note-line) 27px);background-size:100% 28px;background-attachment:local}
+.note textarea:focus-visible{outline:2px solid var(--note-line);border-radius:4px}
+.note-status{font-size:12px;padding:4px 12px 10px;opacity:.75;min-height:1.2em}
+footer{padding:30px 0 70px}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+  <div class="side-top"><a class="brand" href="#start">Lernwebsite</a><button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="sideNav">Menü</button></div>
+  <nav class="side-nav" id="sideNav" aria-label="Navigation">
+    <a class="nav-item" href="#start" data-nav="start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"></path><path d="M5 10v10h14V10"></path></svg><span class="grow">Start</span></a>
+    <div class="side-label">Fächer</div>
+    <a class="nav-item" href="#bku-1" data-nav="bku-1"><span class="dot" style="background:var(--blue)"></span><span class="grow">BKU 1</span><span class="count">1</span></a>
+    <a class="nav-item" href="#bku-2" data-nav="bku-2"><span class="dot" style="background:var(--green)"></span><span class="grow">BKU 2</span><span class="count">0</span></a>
+    <a class="nav-item" href="#bku-3" data-nav="bku-3"><span class="dot" style="background:var(--pink)"></span><span class="grow">BKU 3</span><span class="count">0</span></a>
+    <a class="nav-item" href="#bku-4" data-nav="bku-4"><span class="dot" style="background:var(--amber)"></span><span class="grow">BKU 4</span><span class="count">0</span></a>
+    <a class="nav-item" href="#abu" data-nav="abu"><span class="dot" style="background:#6A4FB3"></span><span class="grow">ABU</span><span class="count">2</span></a>
+    <div class="side-label">Einstellungen</div>
+    <button class="nav-item" id="themeBtn" type="button" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><span class="grow">Dunkelmodus</span><span class="switch" aria-hidden="true"></span></button>
+  </nav>
+</aside>
+<div class="content">
+  <div class="searchbar">
+    <div class="search-wrap">
+      <label for="q" class="sr-only">Thema oder Begriff suchen</label>
+      <div class="search-field"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+        <input id="q" type="search" autocomplete="off" placeholder="Suchen, z. B. Refle, Johari, MWST …" role="combobox" aria-expanded="false" aria-controls="qres" aria-autocomplete="list">
+      </div>
+      <ul class="results" id="qres" role="listbox" aria-label="Suchergebnisse" hidden></ul>
+    </div>
+  </div>
+
+  <div class="view home" id="view-start">
+    <h1>Was lernst du heute?</h1>
+    <p class="sub">Alle Lernzettel an einem Ort. Wähle links ein Fach, unten ein Thema oder such oben nach einem Stichwort.</p>
+    <div class="cont" id="contCard" hidden>
+      <div style="flex:1 1 240px"><div class="k">Weiterlernen</div><div class="t" id="contTitle"></div><div class="m" id="contMeta"></div></div>
+      <a href="#start" id="contLink">Weiter lernen <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+    </div>
+    <h2>Alle Themen</h2>
+    <div class="tgrid" id="allTopics"></div>
+  </div>
+
+  <div class="view subjview" id="view-subject" hidden>
+    <h1 id="subjTitle"></h1>
+    <p class="sub" id="subjSub" style="color:var(--muted);margin:0 0 20px"></p>
+    <div class="tgrid" id="subjGrid"></div>
+  </div>
+
+<div class="view topicview" id="view-reflexion-familie-beziehungen" data-topic="reflexion-familie-beziehungen" hidden>
+  <div class="wrap crumbs"><a href="#bku-1">BKU 1</a><span aria-hidden="true">›</span><span>Reflexion, Familie, Beziehungen</span></div>
+  <header class="hero">
+  <div class="wrap">
+    <h1>Prüfung morgen: alles auf einer Seite</h1>
+    <p class="sub">BKU 1 an der BFS Basel, Mittwoch, 4. November 2026. Reflexion, Familie und Beziehungen.</p>
+    <div class="chips">
+      <span class="chip b">2.02 Reflexion</span>
+      <span class="chip g">2.03 Familie</span>
+      <span class="chip p">2.04 Beziehungen</span>
+    </div>
+  </div>
+</header>
+  <div class="wrap"><div class="secnav" aria-label="Abschnitte"><button type="button" data-target="rfb-reflexion">Reflexion</button><button type="button" data-target="rfb-familie">Familie</button><button type="button" data-target="rfb-beziehungen">Beziehungen</button><button type="button" data-target="rfb-selbsttest">Selbsttest</button><button type="button" data-target="rfb-beispiele">Meine Beispiele</button></div></div>
+  <main class="wrap">
+
+<!-- ============ REFLEXION ============ -->
+<section class="topic" id="rfb-reflexion">
+  <div class="topic-head"><span class="code">2.02</span><h2>Reflexion</h2></div>
+
+  <div class="def">
+    <p class="lead" style="margin:0"><b>Reflexion</b> ist das bewusste Nachdenken über mein <b>Handeln, Denken und Fühlen</b>. Ich schaue mit Abstand auf eine Situation zurück, um daraus zu lernen und es <b>nächstes Mal anders</b> zu machen.</p>
+  </div>
+  <div class="tip"><b>Merkhilfe:</b> Zurückschauen + Handeln, Denken, Fühlen + Lernen.</div>
+
+  <h3>Selbst- und Fremdeinschätzung</h3>
+  <div class="grid2">
+    <div class="box"><span class="tag">Selbst</span><p>Wie sehe ich mich und mein Handeln?</p></div>
+    <div class="box"><span class="tag">Fremd</span><p>Wie nehmen mich andere wahr? (Team, Berufsbildnerin, Eltern)</p></div>
+  </div>
+  <p style="margin-top:12px">Beide zusammen ergeben ein <b>vollständigeres Bild</b>. Wenn sie sich unterscheiden:</p>
+  <p class="small" style="font-size:1rem;color:var(--ink)"><b>zuhören, nachfragen, nicht rechtfertigen, Sichtweisen vergleichen, konkrete Schritte ableiten.</b></p>
+
+  <h3>Zwei Ziele von Reflexion</h3>
+  <div class="grid2">
+    <div class="box"><b>1.</b> Das eigene berufliche Handeln <b>überprüfen und verbessern</b>.</div>
+    <div class="box"><b>2.</b> Eigene <b>Werte, Gefühle und Haltungen</b> bewusst machen und sich professionell weiterentwickeln.</div>
+  </div>
+
+  <h3>Warum ist Reflexion eine Kernkompetenz?</h3>
+  <p>Die FaBe arbeitet mit Menschen und ist <b>selbst ihr wichtigstes Werkzeug</b>. Ohne Reflexion bleiben Gewohnheiten, Vorurteile und Gefühle unbewusst.</p>
+  <div class="grid3">
+    <div class="box"><b>Qualität</b><p class="small" style="margin:0">Reflexion sichert die Qualität der Betreuung.</p></div>
+    <div class="box"><b>Überforderung</b><p class="small" style="margin:0">Sie schützt davor.</p></div>
+    <div class="box"><b>Weiterentwicklung</b><p class="small" style="margin:0">Sie ist die Basis dafür.</p></div>
+  </div>
+
+  <h3>Reflexionskreis nach Gibbs</h3>
+  <p>Sechs Phasen, immer in dieser Reihenfolge:</p>
+  <svg class="gibbs" viewBox="0 0 520 470" role="img" aria-label="Reflexionskreis nach Gibbs mit sechs Phasen im Kreis">
+    <ellipse class="ring" cx="260" cy="235" rx="170" ry="150"/>
+    <text class="mid" x="260" y="232">Gibbs</text>
+    <text class="mid2" x="260" y="254">Uhrzeigersinn lesen</text>
+    <g id="gibbsNodes"></g>
+  </svg>
+  <div class="tip"><b>Eselsbrücke:</b> Was war? Wie fühlte es sich an? Gut oder schlecht? Warum? Was lerne ich? Was tue ich?<br><span class="small">Verwechslungsgefahr: <b>Schlussfolgerung</b> = was habe ich gelernt. <b>Aktionsplan</b> = was tue ich konkret.</span></div>
+
+  <h3>Johari-Fenster</h3>
+  <p>Es geht nur um eine Frage: <b>Wer weiss was über mich?</b></p>
+  <div class="johari-wrap">
+    <div></div>
+    <div class="colhead"><div>Mir bekannt</div><div>Mir unbekannt</div></div>
+    <div class="rowhead"><div>Anderen bekannt</div><div>Anderen unbekannt</div></div>
+    <div class="panes">
+      <div class="pane oeff"><h4>Öffentliche Person</h4><p>Ich weiss es, die anderen auch.</p><p class="ex">Rotes T-Shirt: alle sehen es.</p></div>
+      <div class="pane blind"><h4>Blinder Fleck</h4><p>Die anderen sehen es, ich nicht.</p><p class="ex">Fleck auf dem Rücken des T-Shirts.</p></div>
+      <div class="pane priv"><h4>Privatperson</h4><p>Ich weiss es, die anderen nicht.</p><p class="ex">Narbe unter dem T-Shirt.</p></div>
+      <div class="pane unb"><h4>Unbekanntes</h4><p>Niemand weiss es.</p><p class="ex">Eine Fähigkeit, die sich erst in einer neuen Situation zeigt.</p></div>
+    </div>
+  </div>
+  <div class="tip"><b>Trick:</b> Beim <b>blinden Fleck</b> sind die anderen schlauer als ich. Bei der <b>Privatperson</b> bin ich schlauer als die anderen. <b>Feedback</b> macht den blinden Fleck kleiner und die öffentliche Person grösser.</div>
+  <p class="small" style="margin-top:10px">Beispiele für die K3-Frage: Öffentlich: «Ich bin geduldig mit den Kindern.» Blinder Fleck: «Mein Team sagt, ich werde im Stress schnell laut.» Privat: «Ich bin bei Elterngesprächen unsicher, zeige es aber nicht.»</p>
+
+  <h3>Feedbackregeln</h3>
+  <div class="grid2 fb">
+    <div class="box"><h4>Feedback geben</h4>
+      <ul class="tight"><li>Ich-Botschaften verwenden</li><li>beschreiben statt bewerten</li><li>konkret und zeitnah sein</li><li>anbieten, nicht aufdrängen</li></ul></div>
+    <div class="box"><h4>Feedback erhalten</h4>
+      <ul class="tight"><li>zuhören und nachfragen</li><li>sich nicht sofort rechtfertigen</li><li>die Botschaft zuerst wirken lassen</li></ul></div>
+  </div>
+  <p style="margin-top:12px"><b>Warum beschreiben?</b> Eine Bewertung greift die Person an und führt zu Abwehr. Eine Beschreibung nennt beobachtbares Verhalten, so kann die Person es annehmen und etwas verändern.</p>
+  <div class="bad"><b>Vorher:</b> «Du bist beim Znüni immer so chaotisch.»</div>
+  <div class="good"><b>Nachher:</b> «Mir ist heute beim Znüni aufgefallen, dass der Tisch noch nicht gedeckt war, als die Kinder kamen. Ich habe gemerkt, dass sie unruhig wurden. Mir würde es helfen, wenn wir den Tisch zehn Minuten vorher bereitmachen.»</div>
+  <div class="task" data-topic="reflexion"></div>
+</section>
+
+<!-- ============ FAMILIE ============ -->
+<section class="topic fam" id="rfb-familie">
+  <div class="topic-head"><span class="code">2.03</span><h2>Familie</h2></div>
+
+  <h3 style="margin-top:0">Fünf Säulen der Identität (nach Petzold)</h3>
+  <p>Merksatz: <b>Mein Körper, meine Leute, mein Job, mein Geld, meine Werte.</b></p>
+  <div class="temple" role="img" aria-label="Fünf Säulen der Identität: Leiblichkeit, Soziales Netzwerk, Arbeit und Leistung, Materielle Sicherheit, Werte und Normen">
+    <div class="roof">Identität</div>
+    <div class="pillars">
+      <div class="pillar"><b>Leiblichkeit</b><span>Körper, Gesundheit</span><em class="mk" style="font-style:normal">mein Körper</em></div>
+      <div class="pillar"><b>Soziales Netzwerk</b><span>Beziehungen, Familie, Freunde</span><em class="mk" style="font-style:normal">meine Leute</em></div>
+      <div class="pillar"><b>Arbeit und Leistung</b><span>Beruf, Schule, was ich leiste</span><em class="mk" style="font-style:normal">mein Job</em></div>
+      <div class="pillar"><b>Materielle Sicherheit</b><span>Geld, Wohnen, Besitz</span><em class="mk" style="font-style:normal">mein Geld</em></div>
+      <div class="pillar"><b>Werte und Normen</b><span>Was ich für richtig und normal halte</span><em class="mk" style="font-style:normal">meine Werte</em></div>
+    </div>
+  </div>
+  <p style="margin-top:16px"><b>Wie beeinflussen Werte aus der Familie die FaBe?</b> Werte aus der Herkunftsfamilie prägen, was wir als «normal» empfinden (Essen, Ordnung, Schlafen, Erziehung). Wir bewerten dadurch das Verhalten von Kindern und Eltern unbewusst. Wer das weiss, reagiert offener und professioneller.</p>
+
+  <h3>Geschlechterrolle</h3>
+  <div class="def"><p style="margin:0">Die <b>Erwartungen einer Gesellschaft</b>, wie sich Menschen wegen ihres Geschlechts verhalten, aussehen oder welche Aufgaben sie übernehmen sollen. Sie ist <b>erlernt und veränderbar</b>.</p></div>
+  <p style="margin-top:12px"><b>Kinder lernen sie durch:</b> Vorbilder (Eltern, Fachpersonen), Spielzeug, Kleidung, Sprache, Medien, Lob und Kritik für «typisches» Verhalten.</p>
+  <p><b>Folge für die Kita:</b> allen Kindern alle Spiel- und Rollenangebote machen, keine Sätze wie «Jungs weinen nicht».</p>
+
+  <h3>Sechs Familienformen</h3>
+  <div class="fam-cards" id="famCards"></div>
+  <div class="tip"><b>Beispiel Tim (4):</b> Er lebt bei seiner Mutter, ihrem neuen Partner und dessen Tochter, am Wochenende beim Vater. Das ist eine <b>Patchworkfamilie</b>: Beide Partner bringen Kinder aus früheren Beziehungen mit, und Tim lebt in zwei Haushalten. Je nach Fachtext kann auch «Stieffamilie» stimmen.</div>
+
+  <h3>Sechs Familienphasen</h3>
+  <ol class="timeline" aria-label="Familienphasen in der richtigen Reihenfolge">
+    <li data-n="1"><b>Verselbst&shy;ständigung</b><span>Auszug von zu Hause</span></li>
+    <li data-n="2"><b>Familien&shy;gründung</b><span>Paar gründet Familie</span></li>
+    <li data-n="3"><b>Junge Familie</b><span>Kinder da, alles neu organisieren</span></li>
+    <li data-n="4"><b>Reife Familie</b><span>Kinder werden älter</span></li>
+    <li data-n="5"><b>Nach&shy;elterliche Phase</b><span>Kinder sind ausgezogen</span></li>
+    <li data-n="6"><b>Senioren&shy;phase</b><span>Pension, Grosseltern</span></li>
+  </ol>
+  <div class="tip"><b>Merkhilfe:</b> Auszug, Gründung, Kinder, älter, leer, Pension.<br><span class="small"><b>Junge Familie:</b> Eltern übernehmen Erziehung und Betreuung und koordinieren Arbeit, Geld und Haushalt neu (Wer arbeitet wie viel? Kitaplatz suchen, Grosseltern einbeziehen). Ein Paar, das das erste Kind erwartet und einen Kitaplatz sucht, ist im Übergang von der Familiengründung zur jungen Familie.</span></div>
+  <div class="task" data-topic="familie"></div>
+</section>
+
+<!-- ============ BEZIEHUNGEN ============ -->
+<section class="topic bez" id="rfb-beziehungen">
+  <div class="topic-head"><span class="code">2.04</span><h2>Beziehungen</h2></div>
+
+  <div class="def"><p class="lead" style="margin:0">Eine <b>Beziehung</b> ist eine wechselseitige Verbindung zwischen Menschen, in der sie sich <b>gegenseitig wahrnehmen und beeinflussen</b>.</p></div>
+
+  <h3>Warum ist die Beziehung die Grundlage in der Kita?</h3>
+  <ul class="tight">
+    <li>Kinder brauchen <b>sichere Beziehungen</b>, um sich wohlzufühlen, die Umgebung zu erkunden und zu lernen.</li>
+    <li><b>Vertrauen</b> ist die Basis für die Zusammenarbeit mit den Eltern.</li>
+    <li>Jede Betreuungshandlung (Wickeln, Trösten, Essen) gestaltet Beziehung.</li>
+  </ul>
+
+  <h3>Eingewöhnung: so gestalte ich die Beziehung</h3>
+  <div class="grid2">
+    <div class="box"><ul class="tight"><li>Kind und Eltern kennenlernen</li><li>Informationen austauschen (Gewohnheiten, Rituale)</li><li>eine <b>feste Bezugsperson</b> bestimmen</li></ul></div>
+    <div class="box"><ul class="tight"><li>Kind mit Elternteil <b>schrittweise</b> eingewöhnen</li><li>Signale des Kindes <b>feinfühlig</b> beantworten</li><li>so Vertrauen aufbauen</li></ul></div>
+  </div>
+
+  <h3>Privat oder professionell?</h3>
+  <p>Vergleich: Beziehung zu einer Freundin und zu einem Kind in der Kita.</p>
+  <div class="cmp" role="table" aria-label="Vergleich private und professionelle Beziehung">
+    <div class="row head" role="row"><div class="lab" role="columnheader"></div><div class="hd" role="columnheader">Freundin (privat)</div><div class="hd" role="columnheader">Kita-Kind (professionell)</div></div>
+    <div class="row" role="row"><div class="lab" role="rowheader">Gewählt</div><div>selbst gewählt</div><div>durch den Beruf gegeben</div></div>
+    <div class="row" role="row"><div class="lab" role="rowheader">Freiwillig</div><div>freiwillig</div><div>nicht freiwillig</div></div>
+    <div class="row" role="row"><div class="lab" role="rowheader">Dauer</div><div>offen</div><div>befristet (bis zum Kita-Austritt)</div></div>
+    <div class="row" role="row"><div class="lab" role="rowheader">Nähe und Distanz</div><div>nach eigenem Wunsch</div><div>professionell reguliert</div></div>
+    <div class="row" role="row"><div class="lab" role="rowheader">Hierarchie</div><div>meist gleichberechtigt</div><div>FaBe hat mehr Wissen, Verantwortung und Macht</div></div>
+    <div class="row" role="row"><div class="lab" role="rowheader">Abhängigkeit</div><div>beidseitig</div><div><b>einseitig</b>: Das Kind ist auf die FaBe angewiesen. Die FaBe muss verantwortungsvoll damit umgehen.</div></div>
+  </div>
+  <div class="task" data-topic="beziehungen"></div>
+</section>
+
+<!-- ============ SELBSTTEST ============ -->
+<section class="topic test" id="rfb-selbsttest">
+  <div class="topic-head"><span class="code">Test</span><h2>Selbsttest</h2></div>
+  <p>Antworte zuerst im Kopf oder laut, dann tippe auf die Frage.</p>
+  <button class="kbtn closeAll" type="button">Alle wieder zuklappen</button>
+
+  <details class="card"><summary>Definiere Reflexion in einem Satz.</summary><div class="ans">Bewusstes Nachdenken über mein Handeln, Denken und Fühlen, mit Abstand zurückschauen, um nächstes Mal anders zu handeln.</div></details>
+  <details class="card"><summary>Nenne die sechs Gibbs-Phasen in der richtigen Reihenfolge.</summary><div class="ans">Beschreibung, Gefühle, Bewertung, Analyse, Schlussfolgerung, Aktionsplan.</div></details>
+  <details class="card"><summary>Was geschieht bei «Analyse» und was bei «Aktionsplan»?</summary><div class="ans">Analyse: Warum ist es so gelaufen? Ursachen suchen, Fachwissen beiziehen. Aktionsplan: Was mache ich beim nächsten Mal konkret anders?</div></details>
+  <details class="card"><summary>Nenne die vier Bereiche des Johari-Fensters.</summary><div class="ans">Öffentliche Person, blinder Fleck, Privatperson, Unbekanntes.</div></details>
+  <details class="card"><summary>Wie verkleinert Feedback den blinden Fleck?</summary><div class="ans">Andere sagen mir, wie sie mein Verhalten wahrnehmen. So erfahre ich etwas, das ich selbst nicht sehe. Der blinde Fleck wird kleiner, die öffentliche Person grösser.</div></details>
+  <details class="card"><summary>Nenne drei Regeln fürs Feedback geben und zwei fürs Erhalten.</summary><div class="ans">Geben: Ich-Botschaften, beschreiben statt bewerten, konkret und zeitnah, anbieten statt aufdrängen. Erhalten: zuhören und nachfragen, sich nicht sofort rechtfertigen, Botschaft wirken lassen.</div></details>
+  <details class="card"><summary>Nenne die fünf Säulen der Identität nach Petzold.</summary><div class="ans">Leiblichkeit, soziales Netzwerk, Arbeit und Leistung, materielle Sicherheit, Werte und Normen.</div></details>
+  <details class="card"><summary>Was ist eine Geschlechterrolle und wie lernen Kinder sie?</summary><div class="ans">Erwartungen der Gesellschaft, wie sich Menschen wegen ihres Geschlechts verhalten sollen. Erlernt und veränderbar. Kinder lernen sie durch Vorbilder, Spielzeug, Kleidung, Sprache, Medien, Lob und Kritik.</div></details>
+  <details class="card"><summary>Nenne sechs Familienformen.</summary><div class="ans">Kern-, Einelternfamilie, Stief-, Patchwork-, Adoptiv- und Regenbogenfamilie.</div></details>
+  <details class="card"><summary>Nenne die sechs Familienphasen in der richtigen Reihenfolge.</summary><div class="ans">Verselbstständigung, Familiengründung, junge Familie, reife Familie, nachelterliche Phase, Seniorenphase.</div></details>
+  <details class="card"><summary>Nenne drei Unterschiede zwischen privaten und professionellen Beziehungen.</summary><div class="ans">Zum Beispiel: gewählt/nicht gewählt, freiwillig/unfreiwillig, Dauer, Nähe/Distanz, Hierarchie, Abhängigkeit.</div></details>
+  <details class="card"><summary>Erkläre «Hierarchie» und «Abhängigkeit» in der professionellen Beziehung.</summary><div class="ans">Hierarchie: Die FaBe hat mehr Wissen, Verantwortung und Macht. Abhängigkeit: Das Kind ist auf die FaBe angewiesen, die Abhängigkeit ist einseitig, die FaBe muss verantwortungsvoll damit umgehen.</div></details>
+</section>
+
+<!-- ============ MEINE BEISPIELE ============ -->
+<section class="topic test own" id="rfb-beispiele">
+  <div class="topic-head"><span class="code">K3</span><h2>Meine Beispiele</h2></div>
+  <p>Bei den Anwendungsfragen brauchst du ein eigenes Beispiel. Schreib sie hier vor, die Texte bleiben in diesem Browser gespeichert.</p>
+
+  <label for="ex1">Eine Säule meiner Identität (z. B. Werte und Normen) und wie sie mein Handeln in der Kita beeinflusst
+    <span class="hint">Aufbau: Das habe ich zu Hause gelernt. In der Kita merke ich, dass … Deshalb achte ich bewusst darauf, dass …</span></label>
+  <textarea id="ex1" data-k="bku1-ex1"></textarea>
+
+  <label for="ex2">Eine Geschlechterrolle aus meiner Biografie und was das für die Kita bedeutet
+    <span class="hint">Aufbau: Mir wurde vermittelt, dass … Für die Kita heisst das: Ich mache allen Kindern …</span></label>
+  <textarea id="ex2" data-k="bku1-ex2"></textarea>
+
+  <label for="ex3">Eine echte Kita-Situation, durchgespielt mit dem Gibbs-Kreis
+    <span class="hint">Beschreibung, Gefühle, Bewertung, Analyse, Schlussfolgerung, Aktionsplan</span></label>
+  <textarea id="ex3" data-k="bku1-ex3" style="min-height:170px"></textarea>
+</section>
+
+</main>
+</div>
+<div class="view topicview" id="view-steuern" data-topic="steuern" hidden>
+  <div class="wrap crumbs"><a href="#abu">ABU</a><span aria-hidden="true">›</span><span>Steuern</span></div>
+  <header class="hero">
+  <div class="wrap">
+    <h1>Steuern: alles auf einer Seite</h1>
+    <p class="sub">Gesellschaft, Test am 11. November 2026. Erst lesen, dann abdecken und die Merksätze selbst sagen. Am Ende jedes Teils wartet eine Aufgabe.</p>
+    <div class="chips">
+      <span class="chip b">1 bis 3 Grundlagen</span>
+      <span class="chip g">4 bis 6 Sätze und Rechnen</span>
+      <span class="chip p">7 bis 9 Steuererklärung und mehr</span>
+    </div>
+  </div>
+</header>
+  <div class="wrap"><div class="secnav" aria-label="Abschnitte"><button type="button" data-target="st-grundlagen">Grundlagen</button><button type="button" data-target="st-saetze">Sätze und Rechnen</button><button type="button" data-target="st-erklaerung">Steuererklärung</button><button type="button" data-target="st-selbsttest">Selbsttest</button></div></div>
+  <main class="wrap">
+
+<!-- ============ GRUNDLAGEN ============ -->
+<section class="topic" id="st-grundlagen">
+  <div class="topic-head"><span class="code">1–3</span><h2>Grundlagen</h2></div>
+
+  <h3 style="margin-top:0">1. Was sind Steuern?</h3>
+  <div class="def"><p class="lead" style="margin:0"><b>Steuern</b> sind Geld, das Privatpersonen und Unternehmen an den <b>Staat</b> bezahlen. Der Staat braucht es, um wichtige Aufgaben für alle zu finanzieren.</p></div>
+  <p style="margin-top:14px"><b>Damit bezahlt der Staat zum Beispiel:</b></p>
+  <div class="chips2"><span>Schulen und Bildung</span><span>Strassen und öV</span><span>Polizei und Feuerwehr</span><span>Spitäler und Gesundheit</span><span>AHV und Sozialversicherungen</span></div>
+  <p style="margin-top:16px"><b>Wer erhebt Steuern?</b></p>
+  <div class="three"><div>Bund</div><div>Kantone</div><div>Gemeinden</div></div>
+  <div class="tip"><b>Merke:</b> Steuern finanzieren öffentliche Aufgaben. In der Schweiz erheben Bund, Kantone und Gemeinden Steuern.</div>
+
+  <h3>2. Einnahmen und Ausgaben des Staates</h3>
+  <div class="flow">
+    <div class="node"><h4>Einnahmen</h4><ul><li>Mehrwertsteuer</li><li>direkte Bundessteuer</li></ul></div>
+    <div class="arrow"><span>→</span></div>
+    <div class="node mid">Staat</div>
+    <div class="arrow"><span>→</span></div>
+    <div class="node"><h4>Ausgaben</h4><ul><li>soziale Wohlfahrt</li><li>Verkehr</li><li>Bildung</li><li>Gesundheit</li><li>Sicherheit</li></ul></div>
+  </div>
+  <p style="margin-top:14px"><b>Soziale Wohlfahrt</b> heisst: Menschen erhalten Unterstützung, wenn sie Hilfe brauchen. Beispiele: <b>AHV, IV und Sozialhilfe</b>.</p>
+  <p><b>Staatsquote:</b> Sie zeigt, wie gross der Anteil der Wirtschaftsleistung ist, den der Staat ausgibt.</p>
+  <div class="tip"><b>Merke:</b> Der Staat nimmt Geld ein und verwendet es, um Aufgaben für die Bevölkerung zu erfüllen.</div>
+
+  <h3>3. Direkte und indirekte Steuern</h3>
+  <div class="dir">
+    <div class="side"><h4>Direkte Steuern</h4><p style="margin:0">Werden aufgrund der <b>persönlichen finanziellen Situation</b> bezahlt.</p><ul><li>Einkommenssteuer</li><li>Vermögenssteuer</li><li>Gewinnsteuer</li></ul></div>
+    <div class="side ind"><h4>Indirekte Steuern</h4><p style="margin:0">Werden <b>beim Kaufen oder Verbrauchen</b> bezahlt.</p><ul><li>Mehrwertsteuer</li><li>Mineralölsteuer</li><li>Tabaksteuer</li><li>Alkoholsteuer</li></ul></div>
+  </div>
+  <div class="tip"><b>Eselsbrücke:</b> Direkt = Was verdiene oder besitze ich? Indirekt = Was kaufe oder konsumiere ich?</div>
+
+  <div class="task" data-topic="grundlagen"></div>
+</section>
+
+<!-- ============ SAETZE ============ -->
+<section class="topic fam" id="st-saetze">
+  <div class="topic-head"><span class="code">4–6</span><h2>Sätze und Rechnen</h2></div>
+
+  <h3 style="margin-top:0">4. Steuerprogression</h3>
+  <div class="def"><p style="margin:0"><b>Steuerprogression</b> bedeutet: Je mehr jemand verdient, desto <b>höher ist normalerweise der prozentuale Steuersatz</b>. Ziel: mehr soziale Gerechtigkeit. Wer mehr verdient, bezahlt einen grösseren Anteil seines Einkommens.</p></div>
+  <div class="dual" style="margin-top:16px">
+    <div class="chartbox">
+      <h4>Proportional: Satz bleibt gleich</h4>
+      <div class="chart" role="img" aria-label="Drei gleich hohe Balken: alle zahlen 10 Prozent">
+        <div class="col"><span>10&nbsp;%</span><i style="height:50px"></i></div>
+        <div class="col"><span>10&nbsp;%</span><i style="height:50px"></i></div>
+        <div class="col"><span>10&nbsp;%</span><i style="height:50px"></i></div>
+      </div>
+      <div class="chartlab"><div>tiefes Einkommen</div><div>mittleres Einkommen</div><div>hohes Einkommen</div></div>
+    </div>
+    <div class="chartbox">
+      <h4>Progressiv: Satz steigt</h4>
+      <div class="chart" role="img" aria-label="Drei Balken, die mit dem Einkommen höher werden">
+        <div class="col"><span>5&nbsp;%</span><i style="height:25px"></i></div>
+        <div class="col"><span>10&nbsp;%</span><i style="height:50px"></i></div>
+        <div class="col"><span>15&nbsp;%</span><i style="height:75px"></i></div>
+      </div>
+      <div class="chartlab"><div>tiefes Einkommen</div><div>mittleres Einkommen</div><div>hohes Einkommen</div></div>
+    </div>
+  </div>
+  <p class="small" style="margin-top:8px">Die Prozentzahlen sind nur ein Beispiel zur Veranschaulichung.</p>
+  <div class="tip"><b>Merke:</b> Progressiv bedeutet: Wer mehr verdient, bezahlt prozentual mehr Steuern.</div>
+
+  <h3>5. Mehrwertsteuer (MWST)</h3>
+  <p>Die Mehrwertsteuer ist eine <b>indirekte Steuer</b>. Man bezahlt sie beim Kauf von Waren und Dienstleistungen. Die Unternehmen rechnen sie ab und führen sie dem Bund ab.</p>
+  <div class="rates">
+    <div class="rate"><div class="pct">8,1&nbsp;%</div><h4>Normalsatz</h4><p>Kleidung, Elektronik, Coiffeur</p></div>
+    <div class="rate"><div class="pct">2,6&nbsp;%</div><h4>Reduzierter Satz</h4><p>Lebensmittel, Wasser, Medikamente, Zeitungen</p></div>
+    <div class="rate"><div class="pct">3,8&nbsp;%</div><h4>Sondersatz</h4><p>Hotelübernachtungen</p></div>
+  </div>
+  <div class="tip"><b>Merke:</b> Lebensmittel = 2,6&nbsp;% | Kleidung = 8,1&nbsp;% | Hotel = 3,8&nbsp;%</div>
+  <div class="calc">
+    <h4>Rechne selbst</h4>
+    <div class="row">
+      <label for="cPrice">Preis ohne MWST (CHF)</label>
+      <input id="cPrice" type="number" min="0" step="0.05" value="100" inputmode="decimal">
+      <label for="cRate">Satz</label>
+      <select id="cRate"><option value="8.1">8,1 % Normalsatz</option><option value="2.6">2,6 % reduziert</option><option value="3.8">3,8 % Hotel</option></select>
+    </div>
+    <div class="res" id="cRes" aria-live="polite"></div>
+  </div>
+
+  <h3>6. Verrechnungssteuer</h3>
+  <p>Die Verrechnungssteuer beträgt normalerweise <b>35&nbsp;%</b>. Sie wird zum Beispiel auf bestimmte Zinserträge abgezogen. Wer Einkünfte und Vermögen <b>korrekt in der Steuererklärung angibt</b>, kann sie grundsätzlich <b>zurückfordern</b>.</p>
+  <div class="steps">
+    <div class="step"><span class="n">1</span><div class="amt">500 CHF</div><p>Zinsen auf dem Konto</p></div>
+    <div class="step"><span class="n">2</span><div class="amt minus">−175 CHF</div><p>35&nbsp;% werden abgezogen</p></div>
+    <div class="step"><span class="n">3</span><div class="amt">325 CHF</div><p>bleiben zunächst bei dir</p></div>
+    <div class="step"><span class="n">4</span><div class="amt plus">+175 CHF</div><p>zurück, wenn du korrekt deklarierst</p></div>
+  </div>
+  <div class="tip"><b>Gut zu wissen:</b> Auf Bankzinsen bis und mit <b>200 CHF pro Jahr</b> wird grundsätzlich keine Verrechnungssteuer erhoben.</div>
+
+  <div class="task" data-topic="saetze"></div>
+</section>
+
+<!-- ============ ERKLAERUNG ============ -->
+<section class="topic bez" id="st-erklaerung">
+  <div class="topic-head"><span class="code">7–9</span><h2>Steuererklärung und mehr</h2></div>
+
+  <h3 style="margin-top:0">7. Die Steuererklärung</h3>
+  <div class="def"><p style="margin:0">Mit der Steuererklärung gibst du dem <b>Steueramt</b> Auskunft über dein <b>Einkommen und Vermögen</b>. Das Steueramt berechnet danach, wie viele Steuern du bezahlen musst.</p></div>
+  <p style="margin-top:14px"><b>Wichtige Unterlagen und Belege</b> (zum Abhaken beim Lernen):</p>
+  <div class="checks">
+    <label class="chk"><input type="checkbox"> Lohnausweis</label>
+    <label class="chk"><input type="checkbox"> Bankauszüge und Angaben zum Vermögen</label>
+    <label class="chk"><input type="checkbox"> Belege der Krankenkasse</label>
+    <label class="chk"><input type="checkbox"> Belege für Spenden</label>
+    <label class="chk"><input type="checkbox"> Belege für Berufs- und Krankheitskosten</label>
+  </div>
+  <div class="dual" style="margin-top:16px">
+    <div class="box"><span class="tag">Brutto und Netto</span><p style="margin:0"><b>Bruttolohn</b> = Lohn vor den Abzügen.<br><b>Nettolohn</b> = Lohn nach den Abzügen.</p></div>
+    <div class="box"><span class="tag">Berufskosten</span><p style="margin:0">Ausgaben wegen der Arbeit, z. B. <b>Fahrtkosten, auswärtige Verpflegung, Weiterbildung</b>.</p></div>
+  </div>
+  <p style="margin-top:14px"><b>Weitere mögliche Abzüge:</b> Spenden, bestimmte Krankheitskosten, Kinderbetreuungskosten und Beiträge an die Säule 3a. Es gelten jeweils bestimmte Voraussetzungen.</p>
+  <div class="tip"><b>Nicht vergessen:</b> Steuererklärung vollständig ausfüllen, unterschreiben und die nötigen Belege einreichen.</div>
+
+  <h3>8. Finanzausgleich</h3>
+  <div class="flow">
+    <div class="node"><h4>Finanzstärkere Kantone</h4><p style="margin:0;font-size:.95rem">haben mehr Mittel</p></div>
+    <div class="arrow"><span>→</span></div>
+    <div class="node mid">Finanz&shy;ausgleich</div>
+    <div class="arrow"><span>→</span></div>
+    <div class="node"><h4>Finanzschwächere Kantone</h4><p style="margin:0;font-size:.95rem">erhalten Unterstützung</p></div>
+  </div>
+  <p style="margin-top:12px">Beim Finanzausgleich erhalten <b>finanzschwächere Kantone finanzielle Unterstützung</b>. So können auch sie ihre öffentlichen Aufgaben erfüllen.</p>
+
+  <h3>9. Steuern früher</h3>
+  <p>Früher wurden Steuern teilweise nicht mit Geld, sondern mit <b>Naturalien oder Arbeit</b> bezahlt.</p>
+  <div class="dual">
+    <div class="box"><span class="tag">Zehnten</span><p style="margin:0">Ein Teil der <b>Ernte</b> musste abgegeben werden.</p></div>
+    <div class="box"><span class="tag">Fronarbeit</span><p style="margin:0">Menschen mussten <b>unentgeltlich</b> für einen Herrscher oder eine Kirche arbeiten.</p></div>
+  </div>
+
+  <div class="task" data-topic="erklaerung"></div>
+</section>
+
+<!-- ============ SELBSTTEST ============ -->
+<section class="topic test" id="st-selbsttest">
+  <div class="topic-head"><span class="code">10</span><h2>Das Wichtigste und Selbsttest</h2></div>
+  <div class="box">
+    <b>Das Wichtigste für den Test</b>
+    <ul class="core">
+      <li>Steuern finanzieren Aufgaben des Staates.</li>
+      <li>Direkte Steuern: z. B. Einkommens- und Vermögenssteuer.</li>
+      <li>Indirekte Steuern: z. B. Mehrwertsteuer.</li>
+      <li>Steuerprogression: Wer mehr verdient, bezahlt normalerweise prozentual mehr Steuern.</li>
+      <li>Mehrwertsteuer: 8,1&nbsp;%, 2,6&nbsp;% und 3,8&nbsp;%.</li>
+      <li>Verrechnungssteuer: normalerweise 35&nbsp;%, bei korrekter Steuererklärung grundsätzlich rückforderbar.</li>
+      <li>Für die Steuererklärung braucht man unter anderem den Lohnausweis und verschiedene Belege.</li>
+    </ul>
+  </div>
+  <h3>Selbsttest</h3>
+  <p>Antworte zuerst im Kopf oder laut, dann tippe auf die Frage.</p>
+  <button class="kbtn closeAll" type="button">Alle wieder zuklappen</button>
+  <details class="card"><summary>Was sind Steuern und wofür braucht sie der Staat?</summary><div class="ans">Geld, das Privatpersonen und Unternehmen an den Staat bezahlen. Der Staat finanziert damit öffentliche Aufgaben wie Schulen, Strassen, Polizei, Spitäler und AHV.</div></details>
+  <details class="card"><summary>Wer erhebt in der Schweiz Steuern?</summary><div class="ans">Bund, Kantone und Gemeinden.</div></details>
+  <details class="card"><summary>Nenne die zwei grössten Einnahmequellen des Bundes.</summary><div class="ans">Mehrwertsteuer und direkte Bundessteuer.</div></details>
+  <details class="card"><summary>Was bedeutet soziale Wohlfahrt? Nenne Beispiele.</summary><div class="ans">Menschen erhalten Unterstützung, wenn sie Hilfe brauchen. Beispiele: AHV, IV, Sozialhilfe.</div></details>
+  <details class="card"><summary>Was ist die Staatsquote?</summary><div class="ans">Der Anteil der Wirtschaftsleistung, den der Staat ausgibt.</div></details>
+  <details class="card"><summary>Was ist der Unterschied zwischen direkten und indirekten Steuern?</summary><div class="ans">Direkt: nach persönlicher finanzieller Situation (Einkommen, Vermögen, Gewinn). Indirekt: beim Kaufen oder Verbrauchen (MWST, Mineralöl-, Tabak-, Alkoholsteuer).</div></details>
+  <details class="card"><summary>Was bedeutet Steuerprogression?</summary><div class="ans">Wer mehr verdient, bezahlt normalerweise einen höheren prozentualen Steuersatz. Ziel: mehr soziale Gerechtigkeit.</div></details>
+  <details class="card"><summary>Nenne die drei Mehrwertsteuersätze mit je einem Beispiel.</summary><div class="ans">Normalsatz 8,1 % (Kleidung), reduzierter Satz 2,6 % (Lebensmittel), Sondersatz 3,8 % (Hotelübernachtung).</div></details>
+  <details class="card"><summary>Wie hoch ist die Verrechnungssteuer, und wie bekommt man sie zurück?</summary><div class="ans">Normalerweise 35 %. Man fordert sie zurück, indem man Einkünfte und Vermögen korrekt in der Steuererklärung angibt.</div></details>
+  <details class="card"><summary>Bei 500 CHF Zinsen: Wie viel Verrechnungssteuer wird abgezogen und wie viel bleibt?</summary><div class="ans">35 % = 175 CHF werden abgezogen, 325 CHF bleiben zunächst übrig. Die 175 CHF gibt es bei korrekter Deklaration zurück.</div></details>
+  <details class="card"><summary>Welche Unterlagen brauchst du für die Steuererklärung?</summary><div class="ans">Unter anderem Lohnausweis, Bankauszüge und Angaben zum Vermögen, Belege der Krankenkasse, Belege für Spenden, Berufs- und Krankheitskosten.</div></details>
+  <details class="card"><summary>Was ist der Finanzausgleich? Was waren Zehnten und Fronarbeit?</summary><div class="ans">Finanzausgleich: Finanzschwächere Kantone erhalten Unterstützung, damit sie ihre Aufgaben erfüllen können. Zehnten: Teil der Ernte abgeben. Fronarbeit: unentgeltlich für einen Herrscher oder eine Kirche arbeiten.</div></details>
+</section>
+
+</main>
+</div>
+<div class="view topicview" id="view-diagramme" data-topic="diagramme" hidden>
+  <div class="wrap crumbs"><a href="#abu">ABU</a><span aria-hidden="true">›</span><span>Diagramme</span></div>
+  <header class="hero">
+  <div class="wrap">
+    <h1>Diagramme lesen und auswerten</h1>
+    <p class="sub">ABU, Thema Diagramme (Grafik). Alle Zahlen in den Diagrammen sind erfundene Beispieldaten zum Üben. Am Ende jedes Teils wartet eine Aufgabe.</p>
+    <div class="chips">
+      <span class="chip b">Diagrammtypen</span>
+      <span class="chip g">Den passenden Typ wählen</span>
+      <span class="chip p">Diagramm lesen</span>
+      <span class="chip" style="background:#ECE7FA;color:#6A4FB3">Auswertungstext</span>
+    </div>
+  </div>
+</header>
+  <div class="wrap"><div class="secnav" aria-label="Abschnitte"><button type="button" data-target="dg-typen">Diagrammtypen</button><button type="button" data-target="dg-wahl">Typ wählen</button><button type="button" data-target="dg-lesen">Diagramm lesen</button><button type="button" data-target="dg-text">Auswertungstext</button><button type="button" data-target="dg-selbsttest">Selbsttest</button></div></div>
+  <main class="wrap">
+
+<!-- ============ TYPEN ============ -->
+<section class="topic" id="dg-typen">
+  <div class="topic-head"><span class="code">1</span><h2>Diagrammtypen</h2></div>
+  <div class="def"><p class="lead" style="margin:0">Ein <b>Diagramm</b> stellt Zahlen oder Strukturen <b>grafisch</b> dar. So erkennt man auf einen Blick, was gross, klein, häufig oder selten ist und wie sich etwas verändert.</p></div>
+
+  <div class="types" style="margin-top:18px">
+    <div class="tcard">
+      <h4>Säulendiagramm</h4>
+      <p class="cap">Kinder in der Kita pro Wochentag</p>
+      <svg viewBox="0 0 360 225" role="img" aria-label="Säulendiagramm: Kinder in der Kita pro Wochentag. Montag 14, Dienstag 16, Mittwoch 12, Donnerstag 16, Freitag 10."><line class="svg-grid" x1="40" y1="180" x2="350" y2="180"/><text class="svg-m" x="32" y="184" text-anchor="end">0</text><line class="svg-grid" x1="40" y1="140" x2="350" y2="140"/><text class="svg-m" x="32" y="144" text-anchor="end">5</text><line class="svg-grid" x1="40" y1="100" x2="350" y2="100"/><text class="svg-m" x="32" y="104" text-anchor="end">10</text><line class="svg-grid" x1="40" y1="60" x2="350" y2="60"/><text class="svg-m" x="32" y="64" text-anchor="end">15</text><line class="svg-grid" x1="40" y1="20" x2="350" y2="20"/><text class="svg-m" x="32" y="24" text-anchor="end">20</text><rect class="svg-bar" x="60" y="68" width="38" height="112" rx="4"/><text class="svg-t" x="79" y="62" text-anchor="middle">14</text><text class="svg-m" x="79" y="198" text-anchor="middle">Mo</text><rect class="svg-bar" x="118" y="52" width="38" height="128" rx="4"/><text class="svg-t" x="137" y="46" text-anchor="middle">16</text><text class="svg-m" x="137" y="198" text-anchor="middle">Di</text><rect class="svg-bar" x="176" y="84" width="38" height="96" rx="4"/><text class="svg-t" x="195" y="78" text-anchor="middle">12</text><text class="svg-m" x="195" y="198" text-anchor="middle">Mi</text><rect class="svg-bar" x="234" y="52" width="38" height="128" rx="4"/><text class="svg-t" x="253" y="46" text-anchor="middle">16</text><text class="svg-m" x="253" y="198" text-anchor="middle">Do</text><rect class="svg-bar" x="292" y="100" width="38" height="80" rx="4"/><text class="svg-t" x="311" y="94" text-anchor="middle">10</text><text class="svg-m" x="311" y="198" text-anchor="middle">Fr</text><line class="svg-axis" x1="40" y1="180" x2="350" y2="180"/><text class="svg-m" x="40" y="218">y-Achse: Anzahl Kinder, x-Achse: Wochentag</text></svg>
+      <p><b>Wofür:</b> <b>Vergleich von Grössen über einen Zeitraum</b> (z. B. Wochentage, Monate, Jahre).</p>
+      <p><b>Aussehen:</b> senkrechte Säulen.</p>
+    </div>
+    <div class="tcard">
+      <h4>Balkendiagramm</h4>
+      <p class="cap">Freizeitaktivitäten (20 Lernende, Mehrfachantworten)</p>
+      <svg viewBox="0 0 380 222" role="img" aria-label="Balkendiagramm: Freizeitaktivitäten von 20 Lernenden, Mehrfachantworten. Musik hören 17, Freunde treffen 15, Social Media 14, Sport 9, Gamen 8, Lesen 4."><text class="svg-m" x="118" y="26" text-anchor="end">Musik hören</text><rect class="svg-bar" x="125" y="12" width="187" height="20" rx="4"/><text class="svg-t" x="318" y="27">17</text><text class="svg-m" x="118" y="58" text-anchor="end">Freunde treffen</text><rect class="svg-bar" x="125" y="44" width="165" height="20" rx="4"/><text class="svg-t" x="296" y="59">15</text><text class="svg-m" x="118" y="90" text-anchor="end">Social Media</text><rect class="svg-bar" x="125" y="76" width="154" height="20" rx="4"/><text class="svg-t" x="285" y="91">14</text><text class="svg-m" x="118" y="122" text-anchor="end">Sport</text><rect class="svg-bar" x="125" y="108" width="99" height="20" rx="4"/><text class="svg-t" x="230" y="123">9</text><text class="svg-m" x="118" y="154" text-anchor="end">Gamen</text><rect class="svg-bar" x="125" y="140" width="88" height="20" rx="4"/><text class="svg-t" x="219" y="155">8</text><text class="svg-m" x="118" y="186" text-anchor="end">Lesen</text><rect class="svg-bar" x="125" y="172" width="44" height="20" rx="4"/><text class="svg-t" x="175" y="187">4</text><line class="svg-axis" x1="125" y1="6" x2="125" y2="200"/><text class="svg-m" x="125" y="216">Anzahl Lernende (20 befragt, mehrere Antworten möglich)</text></svg>
+      <p><b>Wofür:</b> <b>Vergleich von Einheiten oder Grössen</b>. Gut bei vielen Kategorien, langen Beschriftungen und Ranglisten.</p>
+      <p><b>Aussehen:</b> waagrechte Balken.</p>
+    </div>
+    <div class="tcard">
+      <h4>Kreisdiagramm</h4>
+      <p class="cap">Schulweg der Klasse (20 Lernende)</p>
+      <svg viewBox="0 0 360 215" role="img" aria-label="Kreisdiagramm: Schulweg von 20 Lernenden. Tram oder Bus 45 Prozent, Velo 25 Prozent, Zug 20 Prozent, zu Fuss 10 Prozent."><path class="pie-slice pc1" d="M100,105 L100.0,17.0 A88,88 0 0 1 127.2,188.7 Z"/><text x="153.9" y="100.5" text-anchor="middle" style="fill:var(--on-accent);font:700 12px Inter,sans-serif">45&#160;%</text><path class="pie-slice pc2" d="M100,105 L127.2,188.7 A88,88 0 0 1 16.3,132.2 Z"/><text x="75.2" y="157.6" text-anchor="middle" style="fill:var(--on-accent);font:700 12px Inter,sans-serif">25&#160;%</text><path class="pie-slice pc3" d="M100,105 L16.3,132.2 A88,88 0 0 1 48.3,33.8 Z"/><text x="48.1" y="92.1" text-anchor="middle" style="fill:var(--on-accent);font:700 12px Inter,sans-serif">20&#160;%</text><path class="pie-slice pc4" d="M100,105 L48.3,33.8 A88,88 0 0 1 100.0,17.0 Z"/><text x="83.1" y="57.1" text-anchor="middle" style="fill:var(--on-accent);font:700 12px Inter,sans-serif">10&#160;%</text><rect class="pc1" x="215" y="39" width="14" height="14" rx="3"/><text class="svg-t" x="237" y="50">Tram/Bus (45&#160;%)</text><rect class="pc2" x="215" y="69" width="14" height="14" rx="3"/><text class="svg-t" x="237" y="80">Velo (25&#160;%)</text><rect class="pc3" x="215" y="99" width="14" height="14" rx="3"/><text class="svg-t" x="237" y="110">Zug (20&#160;%)</text><rect class="pc4" x="215" y="129" width="14" height="14" rx="3"/><text class="svg-t" x="237" y="140">zu Fuss (10&#160;%)</text></svg>
+      <p><b>Wofür:</b> <b>Teilresultate von 100&#160;%</b>, also Anteile an einem Ganzen.</p>
+      <p><b>Achtung:</b> nur bei wenigen Kategorien und nicht bei Mehrfachantworten.</p>
+    </div>
+    <div class="tcard">
+      <h4>Liniendiagramm</h4>
+      <p class="cap">Bildschirmzeit am Handy, Ø Stunden pro Tag</p>
+      <svg viewBox="0 0 360 225" role="img" aria-label="Liniendiagramm: durchschnittliche Bildschirmzeit am Handy in Stunden pro Tag. Montag 3, Dienstag 2,5, Mittwoch 3,5, Donnerstag 2, Freitag 4, Samstag 5,5, Sonntag 5."><line class="svg-grid" x1="40" y1="180" x2="350" y2="180"/><text class="svg-m" x="32" y="184" text-anchor="end">0&#160;h</text><line class="svg-grid" x1="40" y1="130" x2="350" y2="130"/><text class="svg-m" x="32" y="134" text-anchor="end">2&#160;h</text><line class="svg-grid" x1="40" y1="80" x2="350" y2="80"/><text class="svg-m" x="32" y="84" text-anchor="end">4&#160;h</text><line class="svg-grid" x1="40" y1="30" x2="350" y2="30"/><text class="svg-m" x="32" y="34" text-anchor="end">6&#160;h</text><polyline class="svg-line" points="60,105 106,117.5 152,92.5 198,130 244,80 290,42.5 336,55"/><circle class="svg-dot" cx="60" cy="105" r="5"/><text class="svg-t" x="60" y="94" text-anchor="middle">3</text><text class="svg-m" x="60" y="198" text-anchor="middle">Mo</text><circle class="svg-dot" cx="106" cy="117.5" r="5"/><text class="svg-t" x="106" y="106.5" text-anchor="middle">2,5</text><text class="svg-m" x="106" y="198" text-anchor="middle">Di</text><circle class="svg-dot" cx="152" cy="92.5" r="5"/><text class="svg-t" x="152" y="81.5" text-anchor="middle">3,5</text><text class="svg-m" x="152" y="198" text-anchor="middle">Mi</text><circle class="svg-dot" cx="198" cy="130" r="5"/><text class="svg-t" x="198" y="119" text-anchor="middle">2</text><text class="svg-m" x="198" y="198" text-anchor="middle">Do</text><circle class="svg-dot" cx="244" cy="80" r="5"/><text class="svg-t" x="244" y="69" text-anchor="middle">4</text><text class="svg-m" x="244" y="198" text-anchor="middle">Fr</text><circle class="svg-dot" cx="290" cy="42.5" r="5"/><text class="svg-t" x="290" y="31.5" text-anchor="middle">5,5</text><text class="svg-m" x="290" y="198" text-anchor="middle">Sa</text><circle class="svg-dot" cx="336" cy="55" r="5"/><text class="svg-t" x="336" y="44" text-anchor="middle">5</text><text class="svg-m" x="336" y="198" text-anchor="middle">So</text><line class="svg-axis" x1="40" y1="180" x2="350" y2="180"/><text class="svg-m" x="40" y="218">y-Achse: Stunden pro Tag, x-Achse: Wochentag</text></svg>
+      <p><b>Wofür:</b> <b>Zeitlicher Verlauf, Entwicklung über Zeit</b> (steigt, sinkt, bleibt gleich).</p>
+      <p><b>Auch genannt:</b> Kurvendiagramm.</p>
+    </div>
+    <div class="tcard">
+      <h4>Flächendiagramm</h4>
+      <p class="cap">Besucher im Freibad pro Monat (in Tausend)</p>
+      <svg viewBox="0 0 360 225" role="img" aria-label="Flächendiagramm: Besucher im Freibad in Tausend. Mai 2, Juni 6, Juli 9, August 8, September 3."><line class="svg-grid" x1="40" y1="180" x2="350" y2="180"/><text class="svg-m" x="32" y="184" text-anchor="end">0</text><line class="svg-grid" x1="40" y1="105" x2="350" y2="105"/><text class="svg-m" x="32" y="109" text-anchor="end">5</text><line class="svg-grid" x1="40" y1="30" x2="350" y2="30"/><text class="svg-m" x="32" y="34" text-anchor="end">10</text><polygon class="svg-bar" style="opacity:.35" points="60,180 60,150 130,90 200,45 270,60 340,135 340,180"/><polyline class="svg-line" points="60,150 130,90 200,45 270,60 340,135"/><text class="svg-t" x="60" y="141" text-anchor="middle">2</text><text class="svg-m" x="60" y="198" text-anchor="middle">Mai</text><text class="svg-t" x="130" y="81" text-anchor="middle">6</text><text class="svg-m" x="130" y="198" text-anchor="middle">Jun</text><text class="svg-t" x="200" y="36" text-anchor="middle">9</text><text class="svg-m" x="200" y="198" text-anchor="middle">Jul</text><text class="svg-t" x="270" y="51" text-anchor="middle">8</text><text class="svg-m" x="270" y="198" text-anchor="middle">Aug</text><text class="svg-t" x="340" y="126" text-anchor="middle">3</text><text class="svg-m" x="340" y="198" text-anchor="middle">Sep</text><line class="svg-axis" x1="40" y1="180" x2="350" y2="180"/><text class="svg-m" x="40" y="218">y-Achse: Besucher in Tausend, x-Achse: Monat</text></svg>
+      <p><b>Wofür:</b> wie das Liniendiagramm ein <b>Verlauf über Zeit</b>, die Fläche darunter ist ausgefüllt. So sieht man die <b>Menge</b> besser, oft auch mehrere Grössen übereinander.</p>
+    </div>
+    <div class="tcard">
+      <h4>Organigramm</h4>
+      <p class="cap">Struktur einer Kita</p>
+      <svg viewBox="0 0 360 215" role="img" aria-label="Organigramm einer Kita: Kita-Leitung oben, darunter Gruppenleitung Gruppe A und Gruppe B, darunter je FaBe und Lernende."><path class="svg-axis" fill="none" d="M180,46 V66 M95,66 H265 M95,66 V86 M265,66 V86 M95,120 V140 M45,140 H145 M45,140 V156 M145,140 V156 M265,120 V140 M215,140 H315 M215,140 V156 M315,140 V156"/><rect class="svg-bar" x="120" y="12" width="120" height="34" rx="8"/><text style="fill:var(--on-accent);font:700 12px Inter,sans-serif" x="180.0" y="33" text-anchor="middle">Kita-Leitung</text><rect class="svg-grid" x="35" y="86" width="120" height="34" rx="8" style="fill:var(--t)"/><text class="svg-t" x="95.0" y="107" text-anchor="middle">Gruppe A</text><rect class="svg-grid" x="205" y="86" width="120" height="34" rx="8" style="fill:var(--t)"/><text class="svg-t" x="265.0" y="107" text-anchor="middle">Gruppe B</text><rect class="svg-grid" x="5" y="156" width="80" height="34" rx="8" style="fill:var(--t)"/><text class="svg-t" x="45.0" y="177" text-anchor="middle">FaBe</text><rect class="svg-grid" x="105" y="156" width="80" height="34" rx="8" style="fill:var(--t)"/><text class="svg-t" x="145.0" y="177" text-anchor="middle">Lernende</text><rect class="svg-grid" x="175" y="156" width="80" height="34" rx="8" style="fill:var(--t)"/><text class="svg-t" x="215.0" y="177" text-anchor="middle">FaBe</text><rect class="svg-grid" x="275" y="156" width="80" height="34" rx="8" style="fill:var(--t)"/><text class="svg-t" x="315.0" y="177" text-anchor="middle">Lernende</text></svg>
+      <p><b>Wofür:</b> <b>Firmenstruktur, Struktur einer Organisation</b>. Wer gehört wohin, wer ist wem unterstellt?</p>
+      <p><b>Besonders:</b> zeigt keine Zahlen, sondern Beziehungen.</p>
+    </div>
+  </div>
+  <h3>So steht es in deinem OneNote</h3>
+  <div class="checks2">
+    <div><b>Organigramm:</b> Firmenstruktur, Struktur einer Organisation</div>
+    <div><b>Balkendiagramm:</b> Vergleich von Einheiten oder Grössen</div>
+    <div><b>Liniendiagramm:</b> zeitlicher Verlauf, Entwicklung über Zeit</div>
+    <div><b>Säulendiagramm:</b> Vergleich von Grössen über Zeitraum</div>
+    <div><b>Kreisdiagramm:</b> Teilresultate von 100&#160;%</div>
+    <div><b>Flächendiagramm:</b> ebenfalls Verlauf über Zeit (keine eigene Zeile in deiner Liste)</div>
+  </div>
+  <p class="small" style="margin-top:8px">Die Zuordnung ist meine beste Einschätzung, weil die Liste 6 Diagramme, aber nur 5 Beschreibungen hat. Wenn eure Lösung anders ist, gilt die Lösung der Lehrperson.</p>
+  <p class="small" style="margin-top:12px"><b>Weitere Typen, die dir begegnen können:</b> gestapeltes Säulendiagramm (Teile innerhalb einer Säule), Punktdiagramm oder Streudiagramm (Zusammenhang zwischen zwei Grössen).</p>
+
+  <div class="task" data-topic="typen"></div>
+</section>
+
+<!-- ============ WAHL ============ -->
+<section class="topic fam" id="dg-wahl">
+  <div class="topic-head"><span class="code">2</span><h2>Den passenden Typ wählen</h2></div>
+  <p class="lead">Frag dich zuerst: <b>Was will ich zeigen?</b></p>
+  <div class="decide">
+    <div class="dcard"><p class="qq"><b>Vergleich von Einheiten oder Grössen</b>?</p><div class="aa">Balken</div></div>
+    <div class="dcard"><p class="qq"><b>Vergleich von Grössen über einen Zeitraum</b>?</p><div class="aa">Säulen</div></div>
+    <div class="dcard"><p class="qq"><b>Zeitlicher Verlauf</b>, Entwicklung über Zeit?</p><div class="aa">Linie (Fläche)</div></div>
+    <div class="dcard"><p class="qq"><b>Teilresultate von 100&#160;%</b>?</p><div class="aa">Kreis</div></div>
+    <div class="dcard"><p class="qq"><b>Struktur</b> einer Firma oder Organisation?</p><div class="aa">Organigramm</div></div>
+  </div>
+  <div class="tip"><b>Umfragen auswerten:</b> Durfte jede Person <b>nur eine Antwort</b> geben, geht ein Kreisdiagramm. Waren <b>mehrere Antworten</b> möglich, ergibt alles zusammen mehr als 100&#160;%. Dann nimmst du ein Säulen- oder Balkendiagramm.</div>
+
+  <h3>Schnelltest: Welcher Typ passt?</h3>
+  <div class="quiz" id="quiz"></div>
+
+  <div class="task" data-topic="wahl"></div>
+</section>
+
+<!-- ============ LESEN ============ -->
+<section class="topic bez" id="dg-lesen">
+  <div class="topic-head"><span class="code">3</span><h2>Diagramm lesen und verstehen</h2></div>
+  <p class="lead">Bevor du Werte abliest, prüfst du den <b>Rahmen</b> des Diagramms:</p>
+  <div class="checks2">
+    <div><b>Titel:</b> Worum geht es?</div>
+    <div><b>Diagrammtyp:</b> Säulen, Balken, Kreis, Linie?</div>
+    <div><b>Quelle und Jahr:</b> Woher stammen die Zahlen, von wann?</div>
+    <div><b>Befragte:</b> Wer und wie viele wurden befragt?</div>
+    <div><b>Achsen und Einheit:</b> Anzahl, Prozent, CHF, Stunden?</div>
+    <div><b>Legende:</b> Was bedeuten die Farben?</div>
+  </div>
+  <h3>Absolut oder relativ?</h3>
+  <div class="dual">
+    <div class="box"><span class="tag">Absolute Werte</span><p style="margin:0">Die <b>Anzahl</b>, z. B. 9 Lernende fahren Tram oder Bus.</p></div>
+    <div class="box"><span class="tag">Relative Werte</span><p style="margin:0">Der <b>Anteil in Prozent</b>, z. B. 45&#160;% fahren Tram oder Bus.</p></div>
+  </div>
+  <h3>Achtung, Fallen</h3>
+  <ul class="tight">
+    <li><b>Achse beginnt nicht bei 0:</b> Kleine Unterschiede sehen dann riesig aus.</li>
+    <li><b>Kleine Gruppe:</b> «50&#160;%» klingt viel, sind bei 4 Befragten aber nur 2 Personen.</li>
+    <li><b>Mehrfachantworten:</b> Die Werte ergeben zusammen mehr als 100&#160;%.</li>
+    <li><b>Keine Gründe:</b> Ein Diagramm zeigt Zahlen, nicht <i>warum</i>. Gründe sind immer deine Vermutung.</li>
+  </ul>
+
+  <div class="task" data-topic="lesen"></div>
+</section>
+
+<!-- ============ TEXT ============ -->
+<section class="topic txt" id="dg-text">
+  <div class="topic-head"><span class="code">4</span><h2>Auswertungstext schreiben</h2></div>
+  <p class="lead">Ein Auswertungstext hat <b>drei Teile</b>, immer in dieser Reihenfolge:</p>
+  <div class="wsteps">
+    <div class="wstep"><span class="n">1</span><h4>Beschreibung</h4><p class="what">Ein Satz: <b>Was wird dargestellt?</b> Diagrammtyp, Thema, Befragte, Quelle und Zeit.</p>
+      <ul><li>Das Säulendiagramm zeigt …</li><li>Dargestellt ist …</li><li>Befragt wurden …</li></ul></div>
+    <div class="wstep"><span class="n">2</span><h4>Analyse</h4><p class="what"><b>Was lässt sich ablesen?</b> Die wichtigsten Werte mit Zahl und Einheit, Höchst- und Tiefstwert, Vergleiche.</p>
+      <ul><li>Am häufigsten … (17 von 20)</li><li>An zweiter Stelle folgt …</li><li>Am wenigsten …</li><li>steigt, sinkt, bleibt gleich</li><li>mehr als die Hälfte, ein Viertel</li></ul></div>
+    <div class="wstep"><span class="n">3</span><h4>Interpretation</h4><p class="what"><b>Wie lassen sich die Werte erklären?</b> Was steckt dahinter? Als Vermutung formulieren.</p>
+      <ul><li>Das lässt sich damit erklären, dass …</li><li>Ein Grund dafür könnte sein …</li><li>Vermutlich …</li></ul></div>
+  </div>
+  <h3>Beispieltext zum Säulendiagramm «Kinder in der Kita pro Wochentag»</h3>
+  <div class="extext">
+    <p><span class="lb">1</span>Das Säulendiagramm zeigt, wie viele Kinder an den fünf Wochentagen in einer Kita betreut werden.</p>
+    <p><span class="lb">2</span>Am meisten Kinder sind am Dienstag und am Donnerstag da, je 16. Am Montag sind es 14, am Mittwoch 12. Am wenigsten Kinder kommen am Freitag, nämlich 10. Das sind 6 Kinder weniger als an den vollsten Tagen.</p>
+    <p><span class="lb">3</span>Das lässt sich vermutlich damit erklären, dass viele Eltern Teilzeit arbeiten und am Freitag frei haben. Am Mittwoch betreuen vielleicht öfter Grosseltern die Kinder.</p>
+  </div>
+  <div class="tip"><b>Tipps:</b> im Präsens schreiben, Zahlen immer mit Einheit nennen, nicht jeden Wert aufzählen, sondern das Wichtigste zuerst. Beschreibung und Analyse sind Fakten, die Interpretation ist deine Vermutung.</div>
+
+  <div class="task" data-topic="text"></div>
+</section>
+
+<!-- ============ SELBSTTEST ============ -->
+<section class="topic test" id="dg-selbsttest">
+  <div class="topic-head"><span class="code">Test</span><h2>Selbsttest</h2></div>
+  <p>Antworte zuerst im Kopf oder laut, dann tippe auf die Frage.</p>
+  <button class="kbtn closeAll" type="button">Alle wieder zuklappen</button>
+  <details class="card"><summary>Nenne die sechs Diagrammtypen aus dem Unterricht.</summary><div class="ans">Kreisdiagramm, Balkendiagramm, Flächendiagramm, Organigramm, Säulendiagramm, Liniendiagramm.</div></details>
+  <details class="card"><summary>Wofür braucht man ein Organigramm?</summary><div class="ans">Für die Firmenstruktur, die Struktur einer Organisation. Es zeigt keine Zahlen.</div></details>
+  <details class="card"><summary>Balken oder Säulen: Was sagt der Unterricht?</summary><div class="ans">Balken: Vergleich von Einheiten oder Grössen. Säulen: Vergleich von Grössen über einen Zeitraum.</div></details>
+  <details class="card"><summary>Wofür nimmt man ein Kreisdiagramm?</summary><div class="ans">Für Teilresultate von 100 %, also Anteile an einem Ganzen, bei wenigen Kategorien.</div></details>
+  <details class="card"><summary>Wofür nimmt man ein Liniendiagramm?</summary><div class="ans">Für den zeitlichen Verlauf, die Entwicklung über Zeit: steigt, sinkt, bleibt gleich.</div></details>
+  <details class="card"><summary>Säulen oder Balken: Wann nimmst du Balken?</summary><div class="ans">Bei vielen Kategorien, langen Beschriftungen oder Ranglisten.</div></details>
+  <details class="card"><summary>Warum kein Kreisdiagramm bei Mehrfachantworten?</summary><div class="ans">Weil die Werte zusammen mehr als 100 % ergeben. Ein Kreis zeigt aber Teile eines Ganzen.</div></details>
+  <details class="card"><summary>Was prüfst du zuerst, wenn du ein Diagramm liest?</summary><div class="ans">Titel, Diagrammtyp, Quelle und Jahr, Befragte, Achsen und Einheit, Legende.</div></details>
+  <details class="card"><summary>Was ist der Unterschied zwischen absoluten und relativen Werten?</summary><div class="ans">Absolut = Anzahl (z. B. 9 Lernende). Relativ = Anteil in Prozent (z. B. 45 %).</div></details>
+  <details class="card"><summary>Nenne zwei Fallen beim Diagrammlesen.</summary><div class="ans">Zum Beispiel: Achse beginnt nicht bei 0, kleine Gruppe, Mehrfachantworten, Gründe sind nicht im Diagramm.</div></details>
+  <details class="card"><summary>Nenne die drei Teile eines Auswertungstextes.</summary><div class="ans">Beschreibung (Was wird dargestellt?), Analyse (Was lässt sich ablesen?), Interpretation (Wie lassen sich die Werte erklären?).</div></details>
+  <details class="card"><summary>Was gehört in die Analyse und was in die Interpretation?</summary><div class="ans">Analyse: Fakten, Zahlen mit Einheit, Höchst- und Tiefstwerte, Vergleiche. Interpretation: mögliche Gründe als Vermutung («vermutlich», «könnte»).</div></details>
+</section>
+
+</main>
+</div>
+  <footer><div class="wrap">Lernwebsite für BKU und ABU. Die Diagramme enthalten teils erfundene Beispieldaten.</div></footer>
+</div>
+</div>
+
+<button class="note-fab" id="notesBtn" type="button" hidden aria-expanded="false" aria-controls="noteCard"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v11l-5 5H4z"></path><path d="M15 20v-5h5"></path><path d="M8 9h8M8 13h5"></path></svg><span>Notizen</span></button>
+<div class="note" id="noteCard" role="dialog" aria-label="Notizzettel" hidden>
+  <div class="note-head" id="noteHead"><span class="grip" title="Zum Verschieben ziehen"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.6"></circle><circle cx="15" cy="6" r="1.6"></circle><circle cx="9" cy="12" r="1.6"></circle><circle cx="15" cy="12" r="1.6"></circle><circle cx="9" cy="18" r="1.6"></circle><circle cx="15" cy="18" r="1.6"></circle></svg></span><span class="nt">Notizen</span><button type="button" id="noteClose" aria-label="Notizzettel schliessen"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></div>
+  <div class="note-topic" id="noteTopic"></div>
+  <textarea id="noteText" aria-label="Deine Notizen" placeholder="Eselsbrücken, offene Fragen, eigene Beispiele …"></textarea>
+  <div class="note-status" id="noteStatus" aria-live="polite"></div>
+</div>
+<script>
+(function(){
+  // Gibbs-Kreis
+  var steps = [
+    ["Beschreibung","Was war?"],
+    ["Gefühle","Wie fühlte es sich an?"],
+    ["Bewertung","Gut oder schlecht?"],
+    ["Analyse","Warum?"],
+    ["Schlussfolgerung","Was habe ich gelernt?"],
+    ["Aktionsplan","Was tue ich anders?"]
+  ];
+  var cx = 260, cy = 235, rx = 170, ry = 150, w = 150, h = 56;
+  var NS = "http://www.w3.org/2000/svg";
+  var g = document.getElementById("gibbsNodes");
+  steps.forEach(function(s, i){
+    var ang = (-90 + i*60) * Math.PI/180;
+    var x = cx + rx*Math.cos(ang), y = cy + ry*Math.sin(ang);
+    var n = document.createElementNS(NS,"g"); n.setAttribute("class","node");
+    var r = document.createElementNS(NS,"rect");
+    r.setAttribute("x", x-w/2); r.setAttribute("y", y-h/2); r.setAttribute("width", w); r.setAttribute("height", h); r.setAttribute("rx", 12);
+    n.appendChild(r);
+    var c = document.createElementNS(NS,"circle");
+    c.setAttribute("class","num"); c.setAttribute("cx", x-w/2+4); c.setAttribute("cy", y-h/2+4); c.setAttribute("r", 13);
+    n.appendChild(c);
+    var nt = document.createElementNS(NS,"text"); nt.setAttribute("class","numt"); nt.setAttribute("x", x-w/2+4); nt.setAttribute("y", y-h/2+9); nt.textContent = String(i+1);
+    n.appendChild(nt);
+    var t1 = document.createElementNS(NS,"text"); t1.setAttribute("class","nm"); t1.setAttribute("x", x); t1.setAttribute("y", y-2); t1.setAttribute("text-anchor","middle"); t1.textContent = s[0];
+    n.appendChild(t1);
+    var t2 = document.createElementNS(NS,"text"); t2.setAttribute("class","q"); t2.setAttribute("x", x); t2.setAttribute("y", y+16); t2.setAttribute("text-anchor","middle"); t2.textContent = s[1];
+    n.appendChild(t2);
+    g.appendChild(n);
+  });
+
+  // Familienformen
+  var forms = [
+    ["Kernfamilie","Eltern und ihre Kinder.",["A","A","k","k"]],
+    ["Einelternfamilie","Ein Elternteil lebt allein mit einem oder mehreren Kindern, z. B. nach Trennung oder Tod.",["A","k"]],
+    ["Stieffamilie","Ein Elternteil hat einen neuen Partner.",["A","B","k"]],
+    ["Patchworkfamilie","Beide Partner bringen Kinder aus früheren Beziehungen mit.",["A","B","k","j"]],
+    ["Adoptivfamilie","Das Kind wurde adoptiert.",["A","A","ad"]],
+    ["Regenbogenfamilie","Kinder wachsen bei gleichgeschlechtlichen Eltern auf, z. B. zwei Mütter.",["A","A","k"]]
+  ];
+  var host = document.getElementById("famCards");
+  forms.forEach(function(f){
+    var d = document.createElement("div"); d.className = "fcard";
+    var figs = document.createElement("div"); figs.className = "figs"; figs.setAttribute("aria-hidden","true");
+    f[2].forEach(function(c){ var i = document.createElement("i"); i.className = c; figs.appendChild(i); });
+    var h = document.createElement("h4"); h.textContent = f[0];
+    var p = document.createElement("p"); p.textContent = f[1];
+    d.appendChild(figs); d.appendChild(h); d.appendChild(p);
+    host.appendChild(d);
+  });
+
+  // Selbsttest: alle zuklappen
+  
+
+  // Eigene Beispiele lokal speichern
+  document.querySelectorAll(".own textarea").forEach(function(ta){
+    var key = ta.getAttribute("data-k");
+    try { var v = localStorage.getItem(key); if (v) ta.value = v; } catch(e) {}
+    ta.addEventListener("input", function(){
+      try { localStorage.setItem(key, ta.value); } catch(e) {}
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  function fmt(n){ return n.toFixed(2).replace(".", ","); }
+  var price = document.getElementById("cPrice"), rate = document.getElementById("cRate"), res = document.getElementById("cRes");
+  function calc(){
+    var p = parseFloat(price.value), r = parseFloat(rate.value);
+    if (isNaN(p) || p < 0){ res.textContent = "Gib einen Preis ein."; return; }
+    var tax = p * r / 100;
+    res.textContent = "MWST: " + fmt(tax) + " CHF. Preis mit MWST: " + fmt(p + tax) + " CHF.";
+  }
+  price.addEventListener("input", calc); rate.addEventListener("change", calc); calc();
+  
+})();
+</script>
+<script>
+(function(){
+  var Q = [
+    ["Die Anteile von Babys, Kleinkindern und Kindergartenkindern in einer Kita-Gruppe", ["kreis"], "Kreis: Teile eines Ganzen, wenige Kategorien."],
+    ["Die Temperatur in Basel an jedem Tag im Mai", ["linie","flaeche"], "Linie (oder Fläche): zeitlicher Verlauf."],
+    ["Wer in einer Kita wem unterstellt ist, von der Leitung bis zu den Lernenden", ["organigramm"], "Organigramm: Struktur einer Organisation."],
+    ["Wie viele Kinder in fünf verschiedenen Kitas betreut werden", ["balken","saeulen"], "Balken (oder Säulen): Vergleich von Einheiten oder Grössen."],
+    ["Der Umsatz einer Bäckerei in den Jahren 2021 bis 2025, Jahr für Jahr als einzelne Werte", ["saeulen"], "Säulen: Vergleich von Grössen über einen Zeitraum."],
+    ["Die 10 beliebtesten Lehrberufe mit langen Berufsnamen als Rangliste", ["balken"], "Balken: viele Kategorien, lange Namen, Rangliste."],
+    ["Umfrage: Welche Snacks magst du? (mehrere Antworten möglich)", ["balken","saeulen"], "Balken oder Säulen: Bei Mehrfachantworten ergibt alles mehr als 100 %, darum kein Kreis."],
+    ["Wie sich die Mieten in Basel von 2015 bis 2025 entwickelt haben", ["linie","flaeche"], "Linie: Entwicklung über Zeit."]
+  ];
+  var OPTS = [["saeulen","Säulen"],["balken","Balken"],["kreis","Kreis"],["linie","Linie"],["flaeche","Fläche"],["organigramm","Organigramm"]];
+  var host = document.getElementById("quiz");
+  Q.forEach(function(item){
+    var box = document.createElement("div"); box.className = "qitem";
+    var qt = document.createElement("div"); qt.className = "qt"; qt.textContent = item[0]; box.appendChild(qt);
+    var opts = document.createElement("div"); opts.className = "opts"; box.appendChild(opts);
+    var fb = document.createElement("div"); fb.className = "fb"; fb.setAttribute("aria-live","polite"); box.appendChild(fb);
+    OPTS.forEach(function(o){
+      var b = document.createElement("button"); b.type = "button"; b.textContent = o[1];
+      b.addEventListener("click", function(){
+        opts.querySelectorAll("button").forEach(function(x){ x.classList.remove("right","wrong"); });
+        if (item[1].indexOf(o[0]) >= 0){ b.classList.add("right"); fb.textContent = "Richtig! " + item[2]; }
+        else { b.classList.add("wrong"); fb.textContent = "Noch nicht. Überleg: Vergleich, Anteile von 100 %, Verlauf über Zeit oder Struktur?"; }
+      });
+      opts.appendChild(b);
+    });
+    host.appendChild(box);
+  });
+  
+})();
+</script>
+
+<script>
+/* ---------- Dunkelmodus ---------- */
+(function(){
+  var btn = document.getElementById("themeBtn"), root = document.documentElement;
+  var mq = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+  function isDark(){ var t = root.getAttribute("data-theme"); return t ? t === "dark" : !!(mq && mq.matches); }
+  function sync(){ btn.setAttribute("aria-pressed", isDark() ? "true" : "false"); }
+  try { var s = localStorage.getItem("lernwebsite-theme"); if (s === "dark" || s === "light") root.setAttribute("data-theme", s); } catch(e) {}
+  sync();
+  if (mq && mq.addEventListener) mq.addEventListener("change", sync);
+  btn.addEventListener("click", function(){
+    var next = isDark() ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("lernwebsite-theme", next); } catch(e) {}
+    sync();
+  });
+})();
+
+/* ---------- Navigation ---------- */
+(function(){
+  var SUBJ = [
+    {id:"bku-1", name:"BKU 1", color:"var(--blue)", topics:["reflexion-familie-beziehungen"]},
+    {id:"bku-2", name:"BKU 2", color:"var(--green)", topics:[]},
+    {id:"bku-3", name:"BKU 3", color:"var(--pink)", topics:[]},
+    {id:"bku-4", name:"BKU 4", color:"var(--amber)", topics:[]},
+    {id:"abu",   name:"ABU",   color:"#6A4FB3", topics:["steuern","diagramme"]}
+  ];
+  var TOP = {
+    "reflexion-familie-beziehungen": {subj:"bku-1", title:"Reflexion, Familie, Beziehungen", extra:"Aufgaben · Selbsttest · Notizen"},
+    "steuern": {subj:"abu", title:"Steuern", extra:"Aufgaben · Rechner · Selbsttest"},
+    "diagramme": {subj:"abu", title:"Diagramme", extra:"Aufgaben · Schnelltest · Selbsttest"}
+  };
+  window.SITE = {SUBJ:SUBJ, TOP:TOP};
+  function subj(id){ for (var i=0;i<SUBJ.length;i++) if (SUBJ[i].id===id) return SUBJ[i]; return null; }
+  function tcard(t){
+    var T = TOP[t], S = subj(T.subj);
+    var a = document.createElement("a"); a.className = "tcard2"; a.href = "#" + t;
+    var f = document.createElement("span"); f.className = "f"; f.textContent = S.name; f.style.color = S.color; a.appendChild(f);
+    var n = document.createElement("span"); n.className = "n"; n.textContent = T.title; a.appendChild(n);
+    var x = document.createElement("span"); x.className = "x"; x.textContent = T.extra; a.appendChild(x);
+    return a;
+  }
+  var all = document.getElementById("allTopics");
+  SUBJ.forEach(function(s){ s.topics.forEach(function(t){ all.appendChild(tcard(t)); }); });
+
+  var views = document.querySelectorAll(".view"), notesBtn = document.getElementById("notesBtn");
+  var sideNav = document.getElementById("sideNav"), menuBtn = document.getElementById("menuBtn");
+  var current = null;
+  menuBtn.addEventListener("click", function(){
+    var open = !sideNav.classList.contains("open");
+    sideNav.classList.toggle("open", open); menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  function show(id){ views.forEach(function(v){ v.hidden = (v.id !== id); }); }
+  function setNav(key){
+    document.querySelectorAll(".nav-item[data-nav]").forEach(function(a){
+      var on = a.getAttribute("data-nav") === key;
+      a.classList.toggle("active", on);
+      if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+  }
+  function contCard(){
+    var last = null; try { last = localStorage.getItem("lernwebsite-last"); } catch(e) {}
+    var card = document.getElementById("contCard");
+    if (last && TOP[last]){
+      card.hidden = false;
+      document.getElementById("contTitle").textContent = TOP[last].title;
+      document.getElementById("contMeta").textContent = subj(TOP[last].subj).name + " · zuletzt geöffnet";
+      document.getElementById("contLink").href = "#" + last;
+    } else card.hidden = true;
+  }
+  function route(){
+    var h = (location.hash || "").replace(/^#/, "") || "start";
+    var s = subj(h);
+    window.closeNotes && window.closeNotes();
+    sideNav.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false");
+    if (TOP[h]){
+      current = h; show("view-" + h); setNav(TOP[h].subj); notesBtn.hidden = false;
+      try { localStorage.setItem("lernwebsite-last", h); } catch(e) {}
+      document.title = TOP[h].title + " · Lernwebsite";
+    } else if (s){
+      current = null; show("view-subject"); setNav(s.id); notesBtn.hidden = true;
+      document.getElementById("subjTitle").textContent = s.name;
+      var grid = document.getElementById("subjGrid"); grid.textContent = "";
+      if (s.topics.length){
+        document.getElementById("subjSub").textContent = s.topics.length === 1 ? "1 Thema" : s.topics.length + " Themen";
+        s.topics.forEach(function(t){ grid.appendChild(tcard(t)); });
+      } else {
+        document.getElementById("subjSub").textContent = "Noch keine Themen";
+        var e = document.createElement("div"); e.className = "empty";
+        e.textContent = "Hier ist noch nichts drin. Schick Claude deine Unterlagen, dann kommt hier ein neues Thema dazu.";
+        grid.appendChild(e);
+      }
+      document.title = s.name + " · Lernwebsite";
+    } else {
+      current = null; show("view-start"); setNav("start"); notesBtn.hidden = true; contCard();
+      document.title = "Lernwebsite";
+    }
+    window.scrollTo(0, 0);
+  }
+  window.currentTopic = function(){ return current; };
+  window.topicTitle = function(t){ return TOP[t] ? TOP[t].title : ""; };
+  document.querySelectorAll(".secnav button").forEach(function(b){
+    b.addEventListener("click", function(){
+      var el = document.getElementById(b.getAttribute("data-target"));
+      if (el) el.scrollIntoView({behavior:"smooth", block:"start"});
+    });
+  });
+  document.querySelectorAll(".closeAll").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      (btn.closest("section") || document).querySelectorAll("details.card").forEach(function(d){ d.open = false; });
+    });
+  });
+  window.addEventListener("hashchange", route);
+  route();
+})();
+
+/* ---------- Suche (ungefähr) ---------- */
+(function(){
+  var input = document.getElementById("q"), list = document.getElementById("qres");
+  var SITE = window.SITE, entries = [];
+  function norm(s){
+    return (s || "").toLowerCase().replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss")
+      .normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g," ").trim();
+  }
+  function simp(w){
+    return w.replace(/ph/g,"f").replace(/th/g,"t").replace(/ck/g,"k").replace(/x/g,"ks").replace(/z/g,"ts").replace(/(.)\1+/g,"$1");
+  }
+  function words(s){ return norm(s).split(" ").filter(Boolean).map(simp); }
+  function lev(a, b){
+    if (Math.abs(a.length - b.length) > 3) return 9;
+    var prev = [], cur = [], i, j;
+    for (j=0;j<=b.length;j++) prev[j] = j;
+    for (i=1;i<=a.length;i++){
+      cur = [i];
+      for (j=1;j<=b.length;j++){
+        cur[j] = Math.min(prev[j]+1, cur[j-1]+1, prev[j-1] + (a[i-1]===b[j-1]?0:1));
+      }
+      prev = cur;
+    }
+    return prev[b.length];
+  }
+  function add(label, topic, el, ctx, weight, isDetails){
+    label = (label || "").replace(/\s+/g," ").trim();
+    if (label.length < 2 || label.length > 140) return;
+    entries.push({label:label, topic:topic, el:el, ctx:ctx, w:weight, det:!!isDetails, ws:words(label + " " + (el && el.dataset && el.dataset.alias || ""))});
+  }
+  // Index aufbauen
+  Object.keys(SITE.TOP).forEach(function(t){
+    var T = SITE.TOP[t], S = null;
+    SITE.SUBJ.forEach(function(s){ if (s.id === T.subj) S = s; });
+    add(T.title, t, null, S.name + " · Thema", 2.2);
+    var view = document.getElementById("view-" + t); if (!view) return;
+    var seen = {};
+    view.querySelectorAll("section.topic").forEach(function(sec){
+      var h2 = sec.querySelector(".topic-head h2"), secName = h2 ? h2.textContent.trim() : "";
+      var ctx = T.title + " › " + secName;
+      if (h2) add(secName, t, sec, T.title + " · Abschnitt", 1.4);
+      sec.querySelectorAll("h3, h4, .rate h4, .pane h4, .fcard h4, .tcard h4, .wstep h4, .dcard .aa").forEach(function(h){
+        var k = norm(h.textContent); if (!k || seen[k]) return; seen[k] = 1;
+        add(h.textContent, t, h, ctx, 1.0);
+      });
+      sec.querySelectorAll("details.card summary").forEach(function(sm){
+        add(sm.textContent, t, sm.parentNode, /selbsttest/i.test(secName) ? ctx : ctx + " · Selbsttest", 0.5, true);
+      });
+      sec.querySelectorAll(".def b, .box b, .tip b, .lead b, .pillar b, p b, li b, .tag").forEach(function(b){
+        var txt = b.textContent.replace(/[:.]$/,"").trim();
+        var k = norm(txt);
+        if (!k || k.length < 3 || txt.length > 45 || seen[k] || /^(merke|merkhilfe|tipp|tipps|trick|eselsbruecke|gut zu wissen|nicht vergessen|vorher|nachher|achtung)/.test(k)) return;
+        seen[k] = 1;
+        add(txt, t, b.closest("p, li, .box, .def, .tip, .pillar, .rate, .pane, div") || b, ctx, 0.8);
+      });
+    });
+  });
+
+  function scoreEntry(e, qws){
+    var total = 0;
+    for (var i=0;i<qws.length;i++){
+      var q = qws[i], best = 0;
+      for (var j=0;j<e.ws.length;j++){
+        var w = e.ws[j], s = 0;
+        if (w === q) s = 4;
+        else if (w.indexOf(q) === 0) s = 3.2;
+        else if (q.length >= 3 && w.indexOf(q) > 0) s = 2.2;
+        else if (q.length >= 4){
+          var tol = q.length <= 5 ? 1 : (q.length <= 8 ? 2 : 3);
+          var d = Math.min(lev(q, w), lev(q, w.slice(0, q.length)));
+          if (d <= tol) s = 2 - d * 0.4;
+        }
+        if (s > best) best = s;
+      }
+      if (best === 0) return 0;
+      total += best;
+    }
+    return total / qws.length + e.w;
+  }
+  var results = [], active = -1;
+  function render(){
+    list.textContent = "";
+    var q = input.value;
+    var qws = words(q);
+    if (!qws.length){ close(); return; }
+    var scored = [];
+    entries.forEach(function(e){ var s = scoreEntry(e, qws); if (s > 0) scored.push({e:e, s:s}); });
+    scored.sort(function(a,b){ return b.s - a.s; });
+    var seen = {}; results = [];
+    for (var i=0;i<scored.length && results.length<8;i++){
+      var key = scored[i].e.topic + "|" + norm(scored[i].e.label);
+      if (seen[key]) continue; seen[key] = 1; results.push(scored[i].e);
+    }
+    active = results.length ? 0 : -1;
+    if (!results.length){
+      var li = document.createElement("li"); li.className = "none"; li.setAttribute("role","option"); li.setAttribute("aria-disabled","true");
+      li.textContent = "Nichts gefunden. Versuch ein anderes oder kürzeres Stichwort.";
+      list.appendChild(li);
+    }
+    results.forEach(function(e, i){
+      var li = document.createElement("li"); li.id = "qopt-" + i; li.setAttribute("role","option");
+      var a = document.createElement("span"); a.className = "rl"; a.textContent = e.label; li.appendChild(a);
+      var c = document.createElement("span"); c.className = "rc"; c.textContent = e.ctx; li.appendChild(c);
+      li.addEventListener("mousedown", function(ev){ ev.preventDefault(); go(i); });
+      list.appendChild(li);
+    });
+    list.hidden = false; input.setAttribute("aria-expanded","true");
+    mark();
+  }
+  function mark(){
+    list.querySelectorAll("li[role=option]").forEach(function(li, i){ li.setAttribute("aria-selected", i === active ? "true" : "false"); });
+    if (active >= 0){ input.setAttribute("aria-activedescendant", "qopt-" + active); var el = document.getElementById("qopt-" + active); if (el && el.scrollIntoView) el.scrollIntoView({block:"nearest"}); }
+    else input.removeAttribute("aria-activedescendant");
+  }
+  function close(){ list.hidden = true; input.setAttribute("aria-expanded","false"); input.removeAttribute("aria-activedescendant"); }
+  function go(i){
+    var e = results[i]; if (!e) return;
+    close(); input.value = ""; input.blur();
+    var target = "#" + e.topic;
+    var jump = function(){
+      if (!e.el) return;
+      if (e.det) e.el.open = true;
+      e.el.scrollIntoView({behavior:"smooth", block:"center"});
+      e.el.classList.add("flash");
+      setTimeout(function(){ e.el.classList.remove("flash"); }, 1800);
+    };
+    if (location.hash !== target){ location.hash = target; setTimeout(jump, 80); } else jump();
+  }
+  input.addEventListener("input", render);
+  input.addEventListener("focus", function(){ if (input.value.trim()) render(); });
+  input.addEventListener("blur", function(){ setTimeout(close, 120); });
+  input.addEventListener("keydown", function(ev){
+    if (list.hidden && (ev.key === "ArrowDown")) { render(); return; }
+    if (ev.key === "ArrowDown"){ ev.preventDefault(); if (results.length){ active = (active + 1) % results.length; mark(); } }
+    else if (ev.key === "ArrowUp"){ ev.preventDefault(); if (results.length){ active = (active - 1 + results.length) % results.length; mark(); } }
+    else if (ev.key === "Enter"){ if (active >= 0){ ev.preventDefault(); go(active); } }
+    else if (ev.key === "Escape"){ close(); }
+  });
+  window.searchSelfTest = function(q){ input.value = q; render(); return results.map(function(r){ return r.label + " | " + r.ctx; }); };
+})();
+
+/* ---------- Notizzettel (verschiebbar) ---------- */
+(function(){
+  var btn = document.getElementById("notesBtn"), card = document.getElementById("noteCard"), head = document.getElementById("noteHead");
+  var ta = document.getElementById("noteText"), st = document.getElementById("noteStatus"), topicEl = document.getElementById("noteTopic");
+  var closeBtn = document.getElementById("noteClose");
+  var db = null, uid = null, mode = "local", topic = null, timer = null, saving = false, pending = false, loadedFor = null;
+  var ready = (window.claude && typeof window.claude.use === "function")
+    ? Promise.all([window.claude.use("db"), window.claude.use("user")]).then(function(r){
+        db = r[0]; var u = r[1]; if (!db || !u) return;
+        return u.id().then(function(id){ if (id){ uid = id; mode = "cloud"; } });
+      }).catch(function(){})
+    : Promise.resolve();
+  function lsKey(t){ return "lernwebsite-notes-" + t; }
+  function docRef(t){ return db.collection("data/users/" + uid).doc("notes-" + t); }
+  function where(){ return mode === "cloud" ? "in deinem Claude-Konto" : "in diesem Browser"; }
+  function load(t){
+    loadedFor = null; ta.disabled = true; st.textContent = "Lädt …";
+    ready.then(function(){
+      if (mode === "cloud"){
+        var done = false;
+        var to = setTimeout(function(){ if (!done){ done = true; mode = "local"; loadLocal(t); } }, 10000);
+        docRef(t).get().then(function(snap){
+          if (done) return; done = true; clearTimeout(to);
+          var d = snap.exists ? snap.data() : null;
+          ta.value = d && typeof d.text === "string" ? d.text : ""; finish(t);
+        }).catch(function(){ if (done) return; done = true; clearTimeout(to); mode = "local"; loadLocal(t); });
+      } else loadLocal(t);
+    });
+  }
+  function loadLocal(t){ var v = ""; try { v = localStorage.getItem(lsKey(t)) || ""; } catch(e) {} ta.value = v; finish(t); }
+  function finish(t){ if (topic !== t) return; loadedFor = t; ta.disabled = false; st.textContent = "Speichert automatisch " + where() + "."; }
+  function save(){
+    if (!loadedFor) return;
+    var t = loadedFor, text = ta.value;
+    if (mode === "cloud"){
+      if (saving){ pending = true; return; }
+      saving = true; st.textContent = "Speichert …";
+      docRef(t).set({text:text, updatedAt:Date.now()}).then(function(){ st.textContent = "Gespeichert " + where() + "."; })
+      .catch(function(){ try { localStorage.setItem(lsKey(t), text); } catch(e) {} st.textContent = "Im Konto ging es nicht, darum in diesem Browser gespeichert."; })
+      .then(function(){ saving = false; if (pending){ pending = false; save(); } });
+    } else {
+      try { localStorage.setItem(lsKey(t), text); st.textContent = "Gespeichert " + where() + "."; }
+      catch(e){ st.textContent = "Speichern geht hier nicht. Kopiere deine Notizen zur Sicherheit."; }
+    }
+  }
+  ta.addEventListener("input", function(){ st.textContent = "…"; clearTimeout(timer); timer = setTimeout(save, 800); });
+
+  // Position und Grösse
+  function clamp(x, y){
+    var w = card.offsetWidth, h = card.offsetHeight;
+    return [Math.max(8, Math.min(x, window.innerWidth - w - 8)), Math.max(8, Math.min(y, window.innerHeight - h - 8))];
+  }
+  function place(){
+    var p = null; try { p = JSON.parse(localStorage.getItem("lernwebsite-note-pos") || "null"); } catch(e) {}
+    if (p && p.w && p.h){ card.style.width = Math.min(p.w, window.innerWidth - 16) + "px"; card.style.height = Math.min(p.h, window.innerHeight - 16) + "px"; }
+    var x = p ? p.x : window.innerWidth - card.offsetWidth - 24, y = p ? p.y : window.innerHeight - card.offsetHeight - 90;
+    var c = clamp(x, y); card.style.left = c[0] + "px"; card.style.top = c[1] + "px";
+  }
+  function remember(){
+    try { localStorage.setItem("lernwebsite-note-pos", JSON.stringify({x:card.offsetLeft, y:card.offsetTop, w:card.offsetWidth, h:card.offsetHeight})); } catch(e) {}
+  }
+  var drag = null;
+  head.addEventListener("pointerdown", function(ev){
+    if (ev.target.closest("button")) return;
+    drag = {dx: ev.clientX - card.offsetLeft, dy: ev.clientY - card.offsetTop};
+    card.classList.add("dragging"); head.setPointerCapture(ev.pointerId);
+  });
+  head.addEventListener("pointermove", function(ev){
+    if (!drag) return;
+    var c = clamp(ev.clientX - drag.dx, ev.clientY - drag.dy);
+    card.style.left = c[0] + "px"; card.style.top = c[1] + "px";
+  });
+  function endDrag(){ if (!drag) return; drag = null; card.classList.remove("dragging"); remember(); }
+  head.addEventListener("pointerup", endDrag); head.addEventListener("pointercancel", endDrag);
+  card.addEventListener("pointerup", function(){ if (!drag) remember(); });
+  window.addEventListener("resize", function(){ if (!card.hidden){ var c = clamp(card.offsetLeft, card.offsetTop); card.style.left = c[0] + "px"; card.style.top = c[1] + "px"; } });
+
+  function open(){
+    var t = window.currentTopic(); if (!t) return;
+    topic = t; topicEl.textContent = window.topicTitle(t);
+    card.hidden = false; btn.setAttribute("aria-expanded","true"); place();
+    if (loadedFor !== t) load(t);
+    setTimeout(function(){ ta.focus(); }, 50);
+  }
+  function close(){
+    if (card.hidden) return;
+    clearTimeout(timer); if (loadedFor) save(); remember();
+    card.hidden = true; btn.setAttribute("aria-expanded","false");
+  }
+  window.closeNotes = close;
+  btn.addEventListener("click", function(){ card.hidden ? open() : close(); });
+  closeBtn.addEventListener("click", function(){ close(); btn.focus(); });
+  card.addEventListener("keydown", function(e){ if (e.key === "Escape"){ close(); btn.focus(); } });
+})();
+</script>
+<script>
+(function(){
+  var TASKS = {};
+  Object.assign(TASKS, {
+    reflexion: [
+      {k:"K3", q:"Du findest, dass du das Mittagessen mit den Kindern ruhig begleitet hast. Deine Berufsbildnerin sieht das anders. Was ist hier die Selbst- und was die Fremdeinschätzung, und wie gehst du mit dem Unterschied um?",
+       ref:"Selbsteinschätzung: «Ich war ruhig und habe die Kinder gut begleitet.» Fremdeinschätzung: Die Berufsbildnerin beobachtet z. B., dass ich oft eingegriffen oder laut ermahnt habe. Umgang: zuhören, nachfragen, sich nicht rechtfertigen, die Sichtweisen vergleichen und konkrete Schritte für das nächste Mittagessen ableiten."},
+      {k:"K3", q:"Ein Kind weint beim Abschied jeden Morgen lange. Reflektiere dein Handeln in dieser Situation mit dem Reflexionskreis nach Gibbs (alle sechs Phasen). Du darfst dir die Situation selbst ausmalen, kurze Stichworte pro Phase reichen.",
+       ref:"Beschreibung: Was ist beim Abschied passiert? Gefühle: Wie ging es mir, dem Kind, dem Elternteil? Bewertung: Was lief gut, was nicht? Analyse: Gründe, z. B. Trennungsangst, langer Abschied, fehlendes Ritual (Fachwissen Bindung, Eingewöhnung). Schlussfolgerung: Was habe ich gelernt? Aktionsplan: z. B. festes Abschiedsritual mit den Eltern vereinbaren und das Kind gezielt in Empfang nehmen."},
+      {k:"K3", q:"Formuliere die Aussage «Du bist beim Znüni immer so chaotisch» in ein Feedback um, das die Feedbackregeln einhält.",
+       ref:"Zum Beispiel: «Mir ist heute beim Znüni aufgefallen, dass der Tisch noch nicht gedeckt war, als die Kinder kamen. Ich habe gemerkt, dass sie unruhig wurden. Mir würde es helfen, wenn wir den Tisch zehn Minuten vorher bereitmachen.» Regeln: Ich-Botschaft, beschreiben statt bewerten, konkret und zeitnah, anbieten statt aufdrängen."},
+      {k:"K3", indiv:true, q:"Ordne je ein Beispiel deiner professionellen Haltung den vier Bereichen des Johari-Fensters zu und begründe die Zuordnung.",
+       ref:"Individuelle Antwort. Beispiele: Öffentliche Person: «Ich bin geduldig mit den Kindern.» Blinder Fleck: «Mein Team sagt, dass ich in Stress schnell laut werde.» Privatperson: «Ich bin bei Elterngesprächen unsicher, zeige es aber nicht.» Unbekanntes: Fähigkeiten, die sich erst in neuen Situationen zeigen. Wichtig: Jede Zuordnung wird über «Wer weiss es? Ich / die anderen» begründet."},
+      {k:"K2", q:"Erkläre, weshalb Reflexion als Kernkompetenz einer Fachperson Betreuung gilt.",
+       ref:"Eine FaBe arbeitet mit Menschen und ist selbst ihr wichtigstes Werkzeug. Ohne Reflexion bleiben Gewohnheiten, Vorurteile und Gefühle unbewusst. Reflexion sichert die Qualität der Betreuung, schützt vor Überforderung und ist die Grundlage für die eigene Weiterentwicklung."}
+    ],
+    familie: [
+      {k:"K3", q:"Tim (4 J.) lebt bei seiner Mutter, ihrem neuen Partner und dessen Tochter. Am Wochenende ist er bei seinem Vater. Bestimme die Familienform und begründe deine Antwort.",
+       ref:"Patchworkfamilie: Beide Partner bringen Kinder aus früheren Beziehungen mit (Tim und die Tochter des Partners). Tim lebt zudem in zwei Haushalten, weil er am Wochenende beim Vater ist. Je nach Fachtext kann auch der Begriff Stieffamilie verwendet werden."},
+      {k:"K3", q:"Ein Paar erwartet das erste Kind und sucht einen Kitaplatz. Ordne die Familie einer Phase zu und begründe mit zwei Merkmalen.",
+       ref:"Übergang von der Familiengründung zur jungen Familie. Merkmale: Das Paar bereitet sich auf das erste Kind vor und organisiert Betreuung und Arbeit neu (Kitaplatz, Pensum)."},
+      {k:"K3", indiv:true, q:"Beschreibe eine Säule deiner eigenen Identität (nach Petzold) und zeige an einem Beispiel aus der Kita, wie sie dein Handeln mit Kindern oder Eltern beeinflusst.",
+       ref:"Individuelle Antwort. Beispiel Säule Werte und Normen: «Bei uns musste man den Teller leer essen. In der Kita merke ich, dass ich Kinder zum Aufessen drängen möchte. Ich achte bewusst darauf, dass die Kinder selbst entscheiden, wie viel sie essen.» Wichtig: eine der fünf Säulen richtig benennen, ein konkretes Beispiel aus der Kita, Auswirkung auf das Handeln."},
+      {k:"K3", indiv:true, q:"Beschreibe ein Beispiel aus deiner Biografie, in dem dir eine Geschlechterrolle vermittelt wurde, und zeige, was das für deinen Umgang mit Kindern in der Kita bedeutet.",
+       ref:"Individuelle Antwort. Beispiel: «Mein Bruder durfte länger in den Ausgang als ich.» Bedeutung für die Kita: allen Kindern alle Spiel- und Rollenangebote machen, z. B. Puppenecke und Bauecke für alle, keine Sätze wie «Jungs weinen nicht»."},
+      {k:"K1", q:"Nenne die fünf Säulen der Identität nach Petzold und die sechs Familienphasen in der richtigen Reihenfolge.",
+       ref:"Säulen: Leiblichkeit; soziales Netzwerk (Beziehungen); Arbeit und Leistung; materielle Sicherheit; Werte und Normen. Familienphasen: Verselbstständigung, Familiengründung, junge Familie, reife Familie, nachelterliche Phase, Seniorenphase."}
+    ],
+    beziehungen: [
+      {k:"K3", q:"Ein neues Kind beginnt mit der Eingewöhnung. Zeige an diesem Beispiel, wie du die Beziehung zum Kind und zu den Eltern gestaltest.",
+       ref:"Beginn der Beziehung: Kind und Eltern kennenlernen, Informationen austauschen (Gewohnheiten, Rituale), eine feste Bezugsperson bestimmen, das Kind mit Elternteil schrittweise eingewöhnen, Signale des Kindes feinfühlig beantworten und so Vertrauen aufbauen."},
+      {k:"K3", q:"Vergleiche die Beziehung zu einer Freundin mit der Beziehung zu einem Kind in deiner Kita anhand von drei Merkmalen.",
+       ref:"Freundin: selbst gewählt, freiwillig, offene Dauer, Nähe nach eigenem Wunsch, gleichberechtigt. Kind in der Kita: nicht gewählt, durch den Beruf gegeben, befristet (bis zum Kita-Austritt), Nähe und Distanz professionell reguliert, FaBe trägt die Verantwortung, das Kind ist abhängig. Es genügen drei Merkmale, die sauber gegenübergestellt sind."},
+      {k:"K2", q:"Erkläre die Unterschiede bei den Merkmalen «Hierarchie» und «Abhängigkeit» zwischen privaten und professionellen Beziehungen.",
+       ref:"Hierarchie: Private Beziehungen sind meist gleichberechtigt. In professionellen Beziehungen hat die FaBe mehr Wissen, Verantwortung und Macht. Abhängigkeit: Das Kind ist auf die FaBe angewiesen, die Abhängigkeit ist einseitig. Die FaBe muss damit verantwortungsvoll umgehen."},
+      {k:"K2", q:"Erkläre, weshalb eine gute Beziehung im sozialen Beruf die Grundlage für die Arbeit mit Kindern ist.",
+       ref:"Kinder brauchen sichere Beziehungen, um sich wohlzufühlen, die Umgebung zu erkunden und zu lernen. Vertrauen ist zudem die Grundlage für die Zusammenarbeit mit den Eltern. Jede Betreuungshandlung (Wickeln, Trösten, Essen) ist auch Beziehungsgestaltung."},
+      {k:"K1", q:"Definiere den Begriff «Beziehung» und nenne vier Merkmale, in denen sich private und professionelle Beziehungen unterscheiden.",
+       ref:"Eine Beziehung ist eine wechselseitige Verbindung zwischen Menschen, in der sie sich gegenseitig wahrnehmen und beeinflussen. Merkmale zum Beispiel: gewählt/nicht gewählt, freiwillig/unfreiwillig, Dauer, Nähe/Distanz, Hierarchie, Abhängigkeit."}
+    ]
+  });
+  Object.assign(TASKS, {
+    grundlagen: [
+      {k:"K2", q:"Erkläre in eigenen Worten, was Steuern sind, und nenne drei Dinge, die der Staat damit bezahlt.",
+       ref:"Steuern sind Geld, das Privatpersonen und Unternehmen an den Staat bezahlen. Der Staat finanziert damit wichtige Aufgaben für alle, z. B. Schulen und Bildung, Strassen und öffentlichen Verkehr, Polizei und Feuerwehr, Spitäler und Gesundheit, AHV und andere Sozialversicherungen."},
+      {k:"K2", q:"Nenne je zwei Beispiele für direkte und für indirekte Steuern und erkläre den Unterschied.",
+       ref:"Direkte Steuern werden aufgrund der persönlichen finanziellen Situation bezahlt, z. B. Einkommenssteuer, Vermögenssteuer, Gewinnsteuer. Indirekte Steuern werden beim Kaufen oder Verbrauchen bezahlt, z. B. Mehrwertsteuer, Mineralölsteuer, Tabaksteuer, Alkoholsteuer. Eselsbrücke: Direkt = was verdiene oder besitze ich, indirekt = was kaufe oder konsumiere ich."},
+      {k:"K3", q:"Anna kauft im Laden ein Paar Schuhe und bezahlt dabei Mehrwertsteuer. Ist das eine direkte oder eine indirekte Steuer? Begründe.",
+       ref:"Eine indirekte Steuer, weil die Mehrwertsteuer beim Kaufen von Waren und Dienstleistungen bezahlt wird und nicht aufgrund der persönlichen finanziellen Situation (Einkommen oder Vermögen)."},
+      {k:"K1", q:"Wer erhebt in der Schweiz Steuern, und was ist die Staatsquote?",
+       ref:"Bund, Kantone und Gemeinden erheben Steuern. Die Staatsquote zeigt, wie gross der Anteil der Wirtschaftsleistung ist, den der Staat ausgibt."},
+      {k:"K2", q:"Was bedeutet soziale Wohlfahrt? Nenne zwei Beispiele und zwei grosse Einnahmequellen des Bundes.",
+       ref:"Soziale Wohlfahrt bedeutet, dass Menschen Unterstützung erhalten, wenn sie Hilfe brauchen. Beispiele: AHV, IV, Sozialhilfe. Grosse Einnahmequellen des Bundes: Mehrwertsteuer und direkte Bundessteuer."}
+    ],
+    saetze: [
+      {k:"K2", q:"Erkläre die Steuerprogression und den Unterschied zu einer proportionalen Steuer. Warum gibt es die Progression?",
+       ref:"Steuerprogression: Je mehr jemand verdient, desto höher ist normalerweise der prozentuale Steuersatz. Proportional: Der Steuersatz bleibt gleich (z. B. alle zahlen 10 %). Ziel der Progression: mehr soziale Gerechtigkeit, Menschen mit höherem Einkommen bezahlen einen grösseren Anteil ihres Einkommens."},
+      {k:"K1", q:"Nenne die drei Mehrwertsteuersätze und gib je ein Beispiel.",
+       ref:"Normalsatz 8,1 % (z. B. Kleidung, Elektronik, Coiffeur). Reduzierter Satz 2,6 % (z. B. Lebensmittel, Wasser, Medikamente, Zeitungen). Sondersatz 3,8 % (Hotelübernachtungen)."},
+      {k:"K3", q:"Ein Pullover kostet 100 CHF ohne Mehrwertsteuer. Wie viel bezahlst du an der Kasse, und wie viel davon ist Steuer?",
+       ref:"Kleidung gehört zum Normalsatz von 8,1 %. 8,1 % von 100 CHF = 8.10 CHF Steuer. An der Kasse: 108.10 CHF. Wichtig ist der Rechenweg und der richtige Satz."},
+      {k:"K3", q:"Du bekommst 800 CHF Zinsen auf ein Sparkonto. Wie viel Verrechnungssteuer wird abgezogen, wie viel bleibt zunächst, und was kannst du tun?",
+       ref:"Verrechnungssteuer 35 % von 800 CHF = 280 CHF. Zunächst bleiben 520 CHF. Wenn Einkünfte und Vermögen korrekt in der Steuererklärung angegeben werden, kann man die 280 CHF grundsätzlich zurückfordern."},
+      {k:"K1", q:"Wie hoch ist die Verrechnungssteuer normalerweise, bis zu welchem Betrag fällt bei Bankzinsen grundsätzlich keine an, und was muss man tun, um sie zurückzubekommen?",
+       ref:"Normalerweise 35 %. Auf Bankzinsen bis und mit 200 CHF pro Jahr wird grundsätzlich keine Verrechnungssteuer erhoben. Zurückfordern: Einkünfte und Vermögen korrekt in der Steuererklärung angeben."}
+    ],
+    erklaerung: [
+      {k:"K2", q:"Wozu dient die Steuererklärung? Nenne drei Unterlagen oder Belege, die man dafür braucht.",
+       ref:"Mit der Steuererklärung gibt man dem Steueramt Auskunft über Einkommen und Vermögen, das Steueramt berechnet danach die Steuern. Unterlagen: z. B. Lohnausweis, Bankauszüge und Angaben zum Vermögen, Belege der Krankenkasse, Belege für Spenden, Berufs- und Krankheitskosten."},
+      {k:"K2", q:"Erkläre den Unterschied zwischen Brutto- und Nettolohn und nenne zwei Beispiele für Berufskosten.",
+       ref:"Bruttolohn ist der Lohn vor den Abzügen, Nettolohn der Lohn nach den Abzügen. Berufskosten sind Ausgaben wegen der Arbeit, z. B. Fahrtkosten, auswärtige Verpflegung, Weiterbildung."},
+      {k:"K2", q:"Was ist der Finanzausgleich und warum gibt es ihn?",
+       ref:"Beim Finanzausgleich erhalten finanzschwächere Kantone finanzielle Unterstützung. So können auch sie ihre öffentlichen Aufgaben erfüllen."},
+      {k:"K2", q:"Was waren der Zehnten und die Fronarbeit? Wie unterscheiden sie sich von den heutigen Steuern?",
+       ref:"Früher wurden Steuern teilweise nicht mit Geld, sondern mit Naturalien oder Arbeit bezahlt. Zehnten: Ein Teil der Ernte musste abgegeben werden. Fronarbeit: Menschen mussten unentgeltlich für einen Herrscher oder eine Kirche arbeiten. Heute bezahlt man Steuern in Geld."},
+      {k:"K1", q:"Nenne drei weitere mögliche Abzüge in der Steuererklärung und sage, was man am Schluss nicht vergessen darf.",
+       ref:"Mögliche Abzüge: Spenden, bestimmte Krankheitskosten, Kinderbetreuungskosten, Beiträge an die Säule 3a (jeweils unter bestimmten Voraussetzungen). Nicht vergessen: Steuererklärung vollständig ausfüllen, unterschreiben und die nötigen Belege einreichen."}
+    ]
+  });
+  Object.assign(TASKS, {
+    typen: [
+      {k:"K1", q:"Nenne die sechs Diagrammtypen aus dem Unterricht und wofür man sie jeweils braucht.",
+       ref:"Kreisdiagramm: Teilresultate von 100 %. Balkendiagramm: Vergleich von Einheiten oder Grössen. Säulendiagramm: Vergleich von Grössen über einen Zeitraum. Liniendiagramm: zeitlicher Verlauf, Entwicklung über Zeit. Flächendiagramm: ebenfalls Verlauf über Zeit, Fläche darunter ausgefüllt. Organigramm: Firmenstruktur, Struktur einer Organisation. Wenn vier oder fünf sinngemäss richtig sind, ist das schon gut."},
+      {k:"K1", q:"Ordne zu: «Firmenstruktur», «Vergleich von Einheiten oder Grössen», «zeitlicher Verlauf», «Vergleich von Grössen über Zeitraum», «Teilresultate von 100 %». Welcher Diagrammtyp gehört jeweils dazu?",
+       ref:"Firmenstruktur: Organigramm. Vergleich von Einheiten oder Grössen: Balkendiagramm. Zeitlicher Verlauf: Liniendiagramm (auch Flächendiagramm). Vergleich von Grössen über Zeitraum: Säulendiagramm. Teilresultate von 100 %: Kreisdiagramm."},
+      {k:"K2", q:"Was zeigt ein Organigramm, und was ist der grösste Unterschied zu den anderen Diagrammen?",
+       ref:"Ein Organigramm zeigt die Struktur einer Firma oder Organisation: wer zu welcher Abteilung gehört und wer wem unterstellt ist. Unterschied: Es zeigt keine Zahlen oder Werte, sondern Beziehungen und Hierarchien."},
+      {k:"K2", q:"Was ist der Unterschied zwischen einem Säulen- und einem Balkendiagramm, und wann nimmst du welches?",
+       ref:"Säulen sind senkrecht, Balken waagrecht. Laut Unterricht: Balkendiagramm für den Vergleich von Einheiten oder Grössen, Säulendiagramm für den Vergleich von Grössen über einen Zeitraum. Balken eignen sich zudem bei vielen Kategorien oder langen Beschriftungen."},
+      {k:"K2", q:"Warum eignet sich ein Kreisdiagramm nicht für eine Umfrage mit Mehrfachantworten?",
+       ref:"Ein Kreisdiagramm zeigt Teile eines Ganzen, alles zusammen ergibt 100 %. Bei Mehrfachantworten ergeben die Werte zusammen mehr als 100 %. Besser ist ein Säulen- oder Balkendiagramm."},
+      {k:"K2", q:"Wofür eignet sich ein Liniendiagramm besonders, und warum ist es dafür besser als ein Kreisdiagramm?",
+       ref:"Ein Liniendiagramm zeigt den zeitlichen Verlauf, die Entwicklung über Zeit (steigt, sinkt, bleibt gleich). Ein Kreisdiagramm zeigt nur Teilresultate von 100 % zu einem Zeitpunkt und keinen Verlauf."}
+    ],
+    wahl: [
+      {k:"K3", q:"Du willst zeigen, wie sich die Zahl der Kinder in deiner Kita von Januar bis Dezember entwickelt hat. Welcher Diagrammtyp passt? Begründe.",
+       ref:"Liniendiagramm, weil es eine Entwicklung über die Zeit zeigt (zwölf Monate hintereinander). Ein Säulendiagramm ist auch vertretbar, wenn die Monate einzeln verglichen werden sollen."},
+      {k:"K3", q:"In einer Umfrage nennt jede Person genau ein Lieblingsgetränk (Wasser, Eistee, Cola, Saft). Du willst die Anteile zeigen. Welcher Diagrammtyp passt? Begründe.",
+       ref:"Kreisdiagramm: Jede Person hat nur eine Antwort gegeben, alles zusammen ergibt 100 % und es gibt nur wenige Kategorien. Ein Säulendiagramm ist auch möglich."},
+      {k:"K3", q:"Du vergleichst 12 Lehrberufe danach, wie viele Lernende sie wählen. Die Berufsnamen sind lang. Welcher Diagrammtyp passt? Begründe.",
+       ref:"Balkendiagramm: viele Kategorien und lange Beschriftungen haben waagrecht gut Platz, ausserdem kann man sie als Rangliste sortieren."},
+      {k:"K3", q:"Die Klasse durfte bei einer Umfrage mehrere Hobbys ankreuzen. Nimmst du ein Kreis- oder ein Balkendiagramm? Begründe.",
+       ref:"Balkendiagramm (oder Säulendiagramm), weil bei Mehrfachantworten die Werte zusammen mehr als 100 % ergeben. Ein Kreisdiagramm würde ein falsches Bild geben."},
+      {k:"K2", q:"Nenne zwei Fragen, die du dir stellst, bevor du einen Diagrammtyp wählst.",
+       ref:"Zum Beispiel: Was will ich zeigen, einen Vergleich, Anteile oder eine Entwicklung über die Zeit? Wie viele Kategorien gibt es? Gab es eine oder mehrere Antworten pro Person?"}
+    ],
+    lesen: [
+      {k:"K1", q:"Nenne fünf Dinge, die du zuerst anschaust, wenn du ein Diagramm liest.",
+       ref:"Titel, Diagrammtyp, Quelle und Jahr, wer und wie viele befragt wurden, Achsen und Einheit (Anzahl, Prozent, CHF, Stunden), Legende, ob absolute oder relative Werte gezeigt werden."},
+      {k:"K3", q:"Säulendiagramm «Kinder in der Kita pro Wochentag»: Montag 14, Dienstag 16, Mittwoch 12, Donnerstag 16, Freitag 10. An welchen Tagen sind am meisten und am wenigsten Kinder da, und wie gross ist der Unterschied?",
+       ref:"Am meisten: Dienstag und Donnerstag mit je 16 Kindern. Am wenigsten: Freitag mit 10 Kindern. Der Unterschied beträgt 6 Kinder."},
+      {k:"K3", q:"Kreisdiagramm «Schulweg der Klasse» (20 Lernende): Tram/Bus 45 %, Velo 25 %, Zug 20 %, zu Fuss 10 %. Wie viele Lernende sind das jeweils, und welches Verkehrsmittel nutzt fast die Hälfte?",
+       ref:"Tram/Bus 9, Velo 5, Zug 4, zu Fuss 2 Lernende. Fast die Hälfte (45 %) fährt Tram oder Bus."},
+      {k:"K2", q:"Was ist der Unterschied zwischen absoluten und relativen Werten? Gib je ein Beispiel.",
+       ref:"Absolute Werte sind Anzahlen, z. B. 9 Lernende. Relative Werte sind Anteile in Prozent, z. B. 45 %."},
+      {k:"K2", q:"Nenne zwei Fallen, auf die du beim Lesen eines Diagramms achten musst.",
+       ref:"Zum Beispiel: Die Achse beginnt nicht bei 0, kleine Unterschiede wirken dann gross. Kleine Gruppe von Befragten. Mehrfachantworten ergeben mehr als 100 %. Fehlende Quelle. Ein Diagramm zeigt keine Gründe."}
+    ],
+    text: [
+      {k:"K3", q:"Schreibe einen kurzen Auswertungstext mit allen drei Teilen zum Liniendiagramm «Bildschirmzeit am Handy, durchschnittliche Stunden pro Tag in einer Klasse»: Montag 3, Dienstag 2,5, Mittwoch 3,5, Donnerstag 2, Freitag 4, Samstag 5,5, Sonntag 5.",
+       ref:"Beschreibung: Das Liniendiagramm zeigt die durchschnittliche Bildschirmzeit am Handy einer Klasse von Montag bis Sonntag in Stunden. Analyse: Am höchsten ist sie am Samstag mit 5,5 Stunden, danach Sonntag mit 5 Stunden. Am tiefsten ist sie am Donnerstag mit 2 Stunden. Unter der Woche liegt sie zwischen 2 und 4 Stunden, ab Freitag steigt sie deutlich. Interpretation (als Vermutung): Am Wochenende haben die Lernenden mehr Freizeit. Am Donnerstag ist vielleicht Schule oder ein langer Tag. Alle drei Teile, Zahlen mit Einheit und eine begründete Vermutung genügen."},
+      {k:"K3", q:"Schreibe einen kurzen Auswertungstext zum Balkendiagramm «Freizeitaktivitäten» (20 Lernende, Mehrfachantworten): Musik hören 17, Freunde treffen 15, Social Media 14, Sport 9, Gamen 8, Lesen 4.",
+       ref:"Beschreibung: Das Balkendiagramm zeigt die Freizeitaktivitäten von 20 befragten Lernenden, mehrere Antworten waren möglich. Analyse: Am häufigsten wird Musik gehört (17 von 20), danach folgen Freunde treffen (15) und Social Media (14). Sport (9) und Gamen (8) liegen im Mittelfeld, Lesen ist mit 4 Nennungen am seltensten. Interpretation (Vermutung): Musik und Handy sind jederzeit verfügbar, Lesen braucht mehr Zeit und Ruhe."},
+      {k:"K3", q:"Schreibe nur den Teil Interpretation zum Säulendiagramm «Kinder in der Kita pro Wochentag» (Montag 14, Dienstag 16, Mittwoch 12, Donnerstag 16, Freitag 10): Wie lassen sich die Werte erklären?",
+       ref:"Zum Beispiel: Viele Eltern arbeiten Teilzeit und haben am Freitag frei, darum sind dann weniger Kinder da. Am Mittwoch betreuen vielleicht öfter Grosseltern. Dienstag und Donnerstag sind häufige Arbeitstage. Wichtig: als Vermutung formuliert (vermutlich, könnte), andere sinnvolle Gründe sind auch richtig."},
+      {k:"K2", q:"Erkläre die drei Teile eines Auswertungstextes und was jeweils hineingehört.",
+       ref:"1. Beschreibung: in einem Satz, was dargestellt wird (Diagrammtyp, Thema, Befragte, Quelle, Zeit). 2. Analyse: was sich ablesen lässt, wichtigste Werte mit Zahl und Einheit, Höchst- und Tiefstwert, Vergleiche. 3. Interpretation: wie sich die Werte erklären lassen, was dahintersteckt, als Vermutung formuliert."},
+      {k:"K3", q:"Verbessere diesen Satz für eine Analyse: «Velo ist ziemlich viel und Zug auch.» (Kreisdiagramm Schulweg: Velo 25 %, Zug 20 %)",
+       ref:"Zum Beispiel: «Ein Viertel der Lernenden (25 %) fährt mit dem Velo zur Schule, etwas weniger (20 %) nehmen den Zug.» Wichtig: Zahlen mit Einheit nennen, klar vergleichen, ganze Sätze ohne vage Wörter wie «ziemlich viel»."}
+    ]
+  });
+  var TITLES = {reflexion:"BKU 1, Reflexion (2.02)", familie:"BKU 1, Familie (2.03)", beziehungen:"BKU 1, Beziehungen (2.04)",
+    grundlagen:"ABU Gesellschaft, Steuern: Grundlagen", saetze:"ABU Gesellschaft, Steuern: Sätze und Rechnen", erklaerung:"ABU Gesellschaft, Steuern: Steuererklärung und mehr",
+    typen:"ABU, Diagramme: Diagrammtypen", wahl:"ABU, Diagramme: passenden Typ wählen", lesen:"ABU, Diagramme: Diagramm lesen", text:"ABU, Diagramme: Auswertungstext schreiben"};
+  var LABELS_UNUSED = null;
+  function el(tag, cls, text){
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text) e.textContent = text;
+    return e;
+  }
+  function mount(host){
+    var topic = host.getAttribute("data-topic");
+    var list = TASKS[topic];
+    var idx = 0, nudged = false;
+
+    host.appendChild(el("h3", "", "Aufgabe"));
+    var meta = el("div", "meta"); host.appendChild(meta);
+    var q = el("div", "q"); host.appendChild(q);
+    var ta = el("textarea"); ta.setAttribute("aria-label", "Deine Antwort");
+    ta.placeholder = "Schreib zuerst deine eigene Antwort, auch Stichworte. Danach klickst du auf Überprüfen und vergleichst.";
+    host.appendChild(ta);
+    var btns = el("div", "btns"); host.appendChild(btns);
+    var go = el("button", "go", "Überprüfen"); go.type = "button";
+    var next = el("button", "", "Andere Aufgabe"); next.type = "button";
+    btns.appendChild(go); btns.appendChild(next);
+    var out = el("div", "out"); out.setAttribute("aria-live", "polite"); host.appendChild(out);
+    var note = el("div", "note"); host.appendChild(note);
+
+    function show(){
+      var t = list[idx];
+      meta.textContent = "Frage " + (idx+1) + " von " + list.length + ", Niveau " + t.k + (t.indiv ? ", eigenes Beispiel" : "");
+      q.textContent = t.q;
+      ta.value = "";
+      out.classList.remove("on"); out.textContent = "";
+      note.textContent = "";
+      nudged = false;
+    }
+    show();
+
+    next.addEventListener("click", function(){ idx = (idx + 1) % list.length; show(); });
+
+    go.addEventListener("click", function(){
+      var t = list[idx];
+      note.textContent = "";
+      if (ta.value.trim().length < 3 && !nudged){
+        nudged = true;
+        note.textContent = "Schreib zuerst deine eigene Antwort, auch Stichworte. Wenn du wirklich nichts weisst, klick nochmals.";
+        return;
+      }
+      out.textContent = "";
+      out.classList.add("on");
+      var d1 = el("div");
+      d1.appendChild(el("strong", "", t.indiv ? "Musterlösung und Beispiele: " : "Musterlösung: "));
+      d1.appendChild(document.createTextNode(t.ref));
+      out.appendChild(d1);
+      out.appendChild(el("div", "", t.indiv
+        ? "Bei dieser Frage zählt dein eigenes Beispiel. Die Beispiele in der Musterlösung sind nur eine Idee, andere sinnvolle Beispiele sind auch richtig."
+        : "Vergleiche: Hast du die Kernpunkte sinngemäss? Andere Worte sind in Ordnung. Fehlendes ergänzt du dir einfach dazu."));
+    });
+  }
+
+  document.querySelectorAll(".task").forEach(mount);
+})();
+</script>
+</body>
+</html>
